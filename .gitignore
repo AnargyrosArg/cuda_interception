@@ -1,0 +1,53 @@
+examples/data
+examples/mnist_cpp/build
+examples/mnist_cpp/data
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+examples/amax/output.txt
+examples/runtimetest/log.txt
+examples/mnist/log.txt
+examples/drivertest/matSumKernel.ptx
+examples/super_resolution/log.txt
+examples/super_resolution/log2.txt
+examples/super_resolution/dataset
+examples/super_resolution/out.png
+examples/super_resolution/__pycache__
+examples/custom/log.txt
+examples/super_resolution/model_epoch_*.pth
+examples/amax/log.txt
+examples/jit_test/log.txt
+examples/dynamotest/log.txt
+examples/nvml_example/supportedVgpus
+examples/nvml_example/example
+count.txt
