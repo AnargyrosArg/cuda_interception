@@ -25,6 +25,7 @@ extern "C"
 			CUmodule *, 
 			const void *)
 			) dlsym(original_libcuda_handle, "cuModuleLoadFatBinary");
+			fprintf(stderr, "original_cuModuleLoadFatBinary:%p\n", original_cuModuleLoadFatBinary);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

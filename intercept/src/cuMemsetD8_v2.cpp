@@ -27,6 +27,7 @@ extern "C"
 			unsigned char, 
 			size_t)
 			) dlsym(original_libcuda_handle, "cuMemsetD8_v2");
+			fprintf(stderr, "original_cuMemsetD8_v2:%p\n", original_cuMemsetD8_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

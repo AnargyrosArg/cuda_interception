@@ -27,6 +27,7 @@ extern "C"
 			CUexternalMemory, 
 			const CUDA_EXTERNAL_MEMORY_MIPMAPPED_ARRAY_DESC *)
 			) dlsym(original_libcuda_handle, "cuExternalMemoryGetMappedMipmappedArray");
+			fprintf(stderr, "original_cuExternalMemoryGetMappedMipmappedArray:%p\n", original_cuExternalMemoryGetMappedMipmappedArray);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

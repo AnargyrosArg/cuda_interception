@@ -33,6 +33,7 @@ extern "C"
 			CUdeviceptr, 
 			size_t)
 			) dlsym(original_libcuda_handle, "cuMemRangeGetAttributes");
+			fprintf(stderr, "original_cuMemRangeGetAttributes:%p\n", original_cuMemRangeGetAttributes);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

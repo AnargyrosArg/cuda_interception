@@ -27,6 +27,7 @@ extern "C"
 			size_t *, 
 			CUdeviceptr)
 			) dlsym(original_libcuda_handle, "cuMemGetAddressRange_v2");
+			fprintf(stderr, "original_cuMemGetAddressRange_v2:%p\n", original_cuMemGetAddressRange_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

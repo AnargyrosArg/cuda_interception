@@ -27,6 +27,7 @@ extern "C"
 			CUgraphNode *, 
 			size_t *)
 			) dlsym(original_libcuda_handle, "cuGraphGetRootNodes");
+			fprintf(stderr, "original_cuGraphGetRootNodes:%p\n", original_cuGraphGetRootNodes);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

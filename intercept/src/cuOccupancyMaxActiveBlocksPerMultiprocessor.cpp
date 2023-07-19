@@ -29,6 +29,7 @@ extern "C"
 			int, 
 			size_t)
 			) dlsym(original_libcuda_handle, "cuOccupancyMaxActiveBlocksPerMultiprocessor");
+			fprintf(stderr, "original_cuOccupancyMaxActiveBlocksPerMultiprocessor:%p\n", original_cuOccupancyMaxActiveBlocksPerMultiprocessor);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

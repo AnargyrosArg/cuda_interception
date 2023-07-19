@@ -31,6 +31,7 @@ extern "C"
 			CUjit_option *, 
 			void **)
 			) dlsym(original_libcuda_handle, "cuModuleLoadDataEx");
+			fprintf(stderr, "original_cuModuleLoadDataEx:%p\n", original_cuModuleLoadDataEx);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

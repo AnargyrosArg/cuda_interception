@@ -25,6 +25,7 @@ extern "C"
 			CUevent *, 
 			CUipcEventHandle)
 			) dlsym(original_libcuda_handle, "cuIpcOpenEventHandle");
+			fprintf(stderr, "original_cuIpcOpenEventHandle:%p\n", original_cuIpcOpenEventHandle);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

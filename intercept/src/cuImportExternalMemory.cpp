@@ -25,6 +25,7 @@ extern "C"
 			CUexternalMemory *, 
 			const CUDA_EXTERNAL_MEMORY_HANDLE_DESC *)
 			) dlsym(original_libcuda_handle, "cuImportExternalMemory");
+			fprintf(stderr, "original_cuImportExternalMemory:%p\n", original_cuImportExternalMemory);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

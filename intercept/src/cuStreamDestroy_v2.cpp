@@ -23,6 +23,7 @@ extern "C"
 			original_cuStreamDestroy_v2 = (CUresult (*)(
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuStreamDestroy_v2");
+			fprintf(stderr, "original_cuStreamDestroy_v2:%p\n", original_cuStreamDestroy_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

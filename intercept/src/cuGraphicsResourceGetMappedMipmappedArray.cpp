@@ -25,6 +25,7 @@ extern "C"
 			CUmipmappedArray *, 
 			CUgraphicsResource)
 			) dlsym(original_libcuda_handle, "cuGraphicsResourceGetMappedMipmappedArray");
+			fprintf(stderr, "original_cuGraphicsResourceGetMappedMipmappedArray:%p\n", original_cuGraphicsResourceGetMappedMipmappedArray);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

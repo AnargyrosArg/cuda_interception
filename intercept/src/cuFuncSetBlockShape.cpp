@@ -29,6 +29,7 @@ extern "C"
 			int, 
 			int)
 			) dlsym(original_libcuda_handle, "cuFuncSetBlockShape");
+			fprintf(stderr, "original_cuFuncSetBlockShape:%p\n", original_cuFuncSetBlockShape);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

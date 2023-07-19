@@ -27,6 +27,7 @@ extern "C"
 			CUdeviceptr, 
 			size_t)
 			) dlsym(original_libcuda_handle, "cuMemcpyDtoH_v2");
+			fprintf(stderr, "original_cuMemcpyDtoH_v2:%p\n", original_cuMemcpyDtoH_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

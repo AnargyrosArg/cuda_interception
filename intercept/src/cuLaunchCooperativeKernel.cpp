@@ -41,6 +41,7 @@ extern "C"
 			CUstream, 
 			void **)
 			) dlsym(original_libcuda_handle, "cuLaunchCooperativeKernel");
+			fprintf(stderr, "original_cuLaunchCooperativeKernel:%p\n", original_cuLaunchCooperativeKernel);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

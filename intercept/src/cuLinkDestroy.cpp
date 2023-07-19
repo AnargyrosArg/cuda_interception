@@ -23,6 +23,7 @@ extern "C"
 			original_cuLinkDestroy = (CUresult (*)(
 			CUlinkState)
 			) dlsym(original_libcuda_handle, "cuLinkDestroy");
+			fprintf(stderr, "original_cuLinkDestroy:%p\n", original_cuLinkDestroy);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

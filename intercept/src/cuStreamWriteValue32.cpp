@@ -29,6 +29,7 @@ extern "C"
 			cuuint32_t, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuStreamWriteValue32");
+			fprintf(stderr, "original_cuStreamWriteValue32:%p\n", original_cuStreamWriteValue32);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

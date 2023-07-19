@@ -29,6 +29,7 @@ extern "C"
 			CUstreamBatchMemOpParams *, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuStreamBatchMemOp");
+			fprintf(stderr, "original_cuStreamBatchMemOp:%p\n", original_cuStreamBatchMemOp);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

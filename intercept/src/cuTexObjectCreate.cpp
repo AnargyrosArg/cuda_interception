@@ -29,6 +29,7 @@ extern "C"
 			const CUDA_TEXTURE_DESC *, 
 			const CUDA_RESOURCE_VIEW_DESC *)
 			) dlsym(original_libcuda_handle, "cuTexObjectCreate");
+			fprintf(stderr, "original_cuTexObjectCreate:%p\n", original_cuTexObjectCreate);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

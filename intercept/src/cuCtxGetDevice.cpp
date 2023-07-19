@@ -23,6 +23,7 @@ extern "C"
 			original_cuCtxGetDevice = (CUresult (*)(
 			CUdevice *)
 			) dlsym(original_libcuda_handle, "cuCtxGetDevice");
+			fprintf(stderr, "original_cuCtxGetDevice:%p\n", original_cuCtxGetDevice);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUgraph *, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuGraphCreate");
+			fprintf(stderr, "original_cuGraphCreate:%p\n", original_cuGraphCreate);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

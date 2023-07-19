@@ -27,6 +27,7 @@ extern "C"
 			int, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuParamSeti");
+			fprintf(stderr, "original_cuParamSeti:%p\n", original_cuParamSeti);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

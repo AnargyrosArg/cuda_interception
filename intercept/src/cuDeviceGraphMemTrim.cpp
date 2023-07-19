@@ -1,15 +1,15 @@
 #include <cuda.h>
 #include <dlfcn.h>
 #include <iostream>
-CUresult (*original_cuDevicePrimaryCtxRelease)(
+CUresult (*original_cuDeviceGraphMemTrim)(
 CUdevice
 );
 //handle to the actual libcuda library, used to fetch original functions with dlsym
 extern void* original_libcuda_handle;
 extern "C"
 {
-	CUresult cuDevicePrimaryCtxRelease(CUdevice dev) {
-		fprintf(stderr, "cuDevicePrimaryCtxRelease()\n");
+	CUresult cuDeviceGraphMemTrim(CUdevice device) {
+		fprintf(stderr, "cuDeviceGraphMemTrim()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -17,20 +17,21 @@ extern "C"
 		if(original_libcuda_handle == NULL){
 			dlopen("libcuda.so.1", RTLD_NOW);
 		}
-		if (!original_cuDevicePrimaryCtxRelease)
+		if (!original_cuDeviceGraphMemTrim)
 		{
 			//fetch the original function addr using dlsym
-			original_cuDevicePrimaryCtxRelease = (CUresult (*)(
+			original_cuDeviceGraphMemTrim = (CUresult (*)(
 			CUdevice)
-			) dlsym(original_libcuda_handle, "cuDevicePrimaryCtxRelease");
+			) dlsym(original_libcuda_handle, "cuDeviceGraphMemTrim");
+			fprintf(stderr, "original_cuDeviceGraphMemTrim:%p\n", original_cuDeviceGraphMemTrim);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){
-			fprintf(stderr, "dlsym error for function cuDevicePrimaryCtxRelease():%s\n", __dlerror);
+			fprintf(stderr, "dlsym error for function cuDeviceGraphMemTrim():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDevicePrimaryCtxRelease(
-		dev
+		return original_cuDeviceGraphMemTrim(
+		device
 		);
 	}
 }

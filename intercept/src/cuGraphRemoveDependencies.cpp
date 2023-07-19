@@ -29,6 +29,7 @@ extern "C"
 			const CUgraphNode *, 
 			size_t)
 			) dlsym(original_libcuda_handle, "cuGraphRemoveDependencies");
+			fprintf(stderr, "original_cuGraphRemoveDependencies:%p\n", original_cuGraphRemoveDependencies);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUdevprop *, 
 			CUdevice)
 			) dlsym(original_libcuda_handle, "cuDeviceGetProperties");
+			fprintf(stderr, "original_cuDeviceGetProperties:%p\n", original_cuDeviceGetProperties);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

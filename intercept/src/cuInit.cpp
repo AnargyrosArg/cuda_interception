@@ -23,6 +23,7 @@ extern "C"
 			original_cuInit = (CUresult (*)(
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuInit");
+			fprintf(stderr, "original_cuInit:%p\n", original_cuInit);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUfilter_mode *, 
 			CUtexref)
 			) dlsym(original_libcuda_handle, "cuTexRefGetMipmapFilterMode");
+			fprintf(stderr, "original_cuTexRefGetMipmapFilterMode:%p\n", original_cuTexRefGetMipmapFilterMode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

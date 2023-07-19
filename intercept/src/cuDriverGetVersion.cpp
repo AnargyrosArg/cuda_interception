@@ -23,6 +23,7 @@ extern "C"
 			original_cuDriverGetVersion = (CUresult (*)(
 			int *)
 			) dlsym(original_libcuda_handle, "cuDriverGetVersion");
+			fprintf(stderr, "original_cuDriverGetVersion:%p\n", original_cuDriverGetVersion);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

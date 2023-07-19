@@ -31,6 +31,7 @@ extern "C"
 			size_t, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuMemAllocPitch_v2");
+			fprintf(stderr, "original_cuMemAllocPitch_v2:%p\n", original_cuMemAllocPitch_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

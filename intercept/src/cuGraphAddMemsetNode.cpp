@@ -33,6 +33,7 @@ extern "C"
 			const CUDA_MEMSET_NODE_PARAMS *, 
 			CUcontext)
 			) dlsym(original_libcuda_handle, "cuGraphAddMemsetNode");
+			fprintf(stderr, "original_cuGraphAddMemsetNode:%p\n", original_cuGraphAddMemsetNode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

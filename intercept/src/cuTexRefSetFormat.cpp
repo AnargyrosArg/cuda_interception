@@ -27,6 +27,7 @@ extern "C"
 			CUarray_format, 
 			int)
 			) dlsym(original_libcuda_handle, "cuTexRefSetFormat");
+			fprintf(stderr, "original_cuTexRefSetFormat:%p\n", original_cuTexRefSetFormat);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

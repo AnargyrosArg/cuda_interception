@@ -27,6 +27,7 @@ extern "C"
 			CUmodule, 
 			const char *)
 			) dlsym(original_libcuda_handle, "cuModuleGetTexRef");
+			fprintf(stderr, "original_cuModuleGetTexRef:%p\n", original_cuModuleGetTexRef);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

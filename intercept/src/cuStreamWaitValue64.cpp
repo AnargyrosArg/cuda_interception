@@ -29,6 +29,7 @@ extern "C"
 			cuuint64_t, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuStreamWaitValue64");
+			fprintf(stderr, "original_cuStreamWaitValue64:%p\n", original_cuStreamWaitValue64);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

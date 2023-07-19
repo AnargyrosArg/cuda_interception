@@ -27,6 +27,7 @@ extern "C"
 			CUfunction_attribute, 
 			int)
 			) dlsym(original_libcuda_handle, "cuFuncSetAttribute");
+			fprintf(stderr, "original_cuFuncSetAttribute:%p\n", original_cuFuncSetAttribute);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

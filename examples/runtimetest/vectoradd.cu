@@ -21,6 +21,7 @@
 
 // For the CUDA runtime routines (prefixed with "cuda_")
 #include <cuda_runtime.h>
+//#include <cuda.h>
 
 //macro for debug printing
 #include "../../include/printmacro.h"
@@ -49,6 +50,8 @@ vectorAdd(const float *A, const float *B, float *C, int numElements)
 int
 main(void)
 {
+//        cuInit(0);
+
     // Error code to check return values for CUDA calls
     cudaError_t err = cudaSuccess;
 
@@ -85,7 +88,6 @@ main(void)
     // Allocate the device input vector A
     float *d_A = NULL;
     err = cudaMalloc((void **)&d_A, size);
-
     fprintf(stderr,"===================================\n");
 
 

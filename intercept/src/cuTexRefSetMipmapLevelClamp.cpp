@@ -27,6 +27,7 @@ extern "C"
 			float, 
 			float)
 			) dlsym(original_libcuda_handle, "cuTexRefSetMipmapLevelClamp");
+			fprintf(stderr, "original_cuTexRefSetMipmapLevelClamp:%p\n", original_cuTexRefSetMipmapLevelClamp);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

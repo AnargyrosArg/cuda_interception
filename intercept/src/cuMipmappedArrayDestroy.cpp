@@ -23,6 +23,7 @@ extern "C"
 			original_cuMipmappedArrayDestroy = (CUresult (*)(
 			CUmipmappedArray)
 			) dlsym(original_libcuda_handle, "cuMipmappedArrayDestroy");
+			fprintf(stderr, "original_cuMipmappedArrayDestroy:%p\n", original_cuMipmappedArrayDestroy);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

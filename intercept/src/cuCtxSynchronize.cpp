@@ -22,6 +22,7 @@ extern "C"
 			original_cuCtxSynchronize = (CUresult (*)(
 			void)
 			) dlsym(original_libcuda_handle, "cuCtxSynchronize");
+			fprintf(stderr, "original_cuCtxSynchronize:%p\n", original_cuCtxSynchronize);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

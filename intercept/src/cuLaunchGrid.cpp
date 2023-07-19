@@ -27,6 +27,7 @@ extern "C"
 			int, 
 			int)
 			) dlsym(original_libcuda_handle, "cuLaunchGrid");
+			fprintf(stderr, "original_cuLaunchGrid:%p\n", original_cuLaunchGrid);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUDA_ARRAY_DESCRIPTOR *, 
 			CUarray)
 			) dlsym(original_libcuda_handle, "cuArrayGetDescriptor_v2");
+			fprintf(stderr, "original_cuArrayGetDescriptor_v2:%p\n", original_cuArrayGetDescriptor_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

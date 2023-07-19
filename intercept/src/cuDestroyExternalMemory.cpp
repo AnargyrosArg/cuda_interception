@@ -23,6 +23,7 @@ extern "C"
 			original_cuDestroyExternalMemory = (CUresult (*)(
 			CUexternalMemory)
 			) dlsym(original_libcuda_handle, "cuDestroyExternalMemory");
+			fprintf(stderr, "original_cuDestroyExternalMemory:%p\n", original_cuDestroyExternalMemory);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGetExportTable(const void **ppExportTable, const CUuuid *pExportTableId) {
-		fprintf(stderr, "cuGetExportTable()\n");
+		fprintf(stderr, "cuGetExportTable() UUID:%p\n",*pExportTableId);
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -25,15 +25,25 @@ extern "C"
 			const void **, 
 			const CUuuid *)
 			) dlsym(original_libcuda_handle, "cuGetExportTable");
+			fprintf(stderr, "original_cuGetExportTable:%p\n", original_cuGetExportTable);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){
 			fprintf(stderr, "dlsym error for function cuGetExportTable():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGetExportTable(
+		CUresult result =  original_cuGetExportTable(
 		ppExportTable, 
 		pExportTableId
 		);
+
+
+		for(int i=0;i< 5;i++){
+			fprintf(stderr,"*ppExportTable[%i]: %p\n",i,*(ppExportTable + sizeof(void*)*i));
+		}
+
+		return result;
+
+
 	}
 }

@@ -27,6 +27,7 @@ extern "C"
 			unsigned int, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuLaunchCooperativeKernelMultiDevice");
+			fprintf(stderr, "original_cuLaunchCooperativeKernelMultiDevice:%p\n", original_cuLaunchCooperativeKernelMultiDevice);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

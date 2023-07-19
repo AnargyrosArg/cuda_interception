@@ -29,6 +29,7 @@ extern "C"
 			CUmem_advise, 
 			CUdevice)
 			) dlsym(original_libcuda_handle, "cuMemAdvise");
+			fprintf(stderr, "original_cuMemAdvise:%p\n", original_cuMemAdvise);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

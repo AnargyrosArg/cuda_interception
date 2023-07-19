@@ -25,6 +25,7 @@ extern "C"
 			CUstream *, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuStreamCreate");
+			fprintf(stderr, "original_cuStreamCreate:%p\n", original_cuStreamCreate);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUstream, 
 			int *)
 			) dlsym(original_libcuda_handle, "cuStreamGetPriority");
+			fprintf(stderr, "original_cuStreamGetPriority:%p\n", original_cuStreamGetPriority);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

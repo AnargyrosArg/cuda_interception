@@ -25,6 +25,7 @@ extern "C"
 			CUDA_RESOURCE_DESC *, 
 			CUsurfObject)
 			) dlsym(original_libcuda_handle, "cuSurfObjectGetResourceDesc");
+			fprintf(stderr, "original_cuSurfObjectGetResourceDesc:%p\n", original_cuSurfObjectGetResourceDesc);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

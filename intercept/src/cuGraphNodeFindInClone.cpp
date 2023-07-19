@@ -27,6 +27,7 @@ extern "C"
 			CUgraphNode, 
 			CUgraph)
 			) dlsym(original_libcuda_handle, "cuGraphNodeFindInClone");
+			fprintf(stderr, "original_cuGraphNodeFindInClone:%p\n", original_cuGraphNodeFindInClone);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

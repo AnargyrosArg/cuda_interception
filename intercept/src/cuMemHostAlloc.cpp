@@ -27,6 +27,7 @@ extern "C"
 			size_t, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuMemHostAlloc");
+			fprintf(stderr, "original_cuMemHostAlloc:%p\n", original_cuMemHostAlloc);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

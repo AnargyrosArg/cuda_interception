@@ -23,6 +23,7 @@ extern "C"
 			original_cuTexObjectDestroy = (CUresult (*)(
 			CUtexObject)
 			) dlsym(original_libcuda_handle, "cuTexObjectDestroy");
+			fprintf(stderr, "original_cuTexObjectDestroy:%p\n", original_cuTexObjectDestroy);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUevent, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuEventRecord");
+			fprintf(stderr, "original_cuEventRecord:%p\n", original_cuEventRecord);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

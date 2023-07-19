@@ -29,6 +29,7 @@ extern "C"
 			void **, 
 			CUdeviceptr)
 			) dlsym(original_libcuda_handle, "cuPointerGetAttributes");
+			fprintf(stderr, "original_cuPointerGetAttributes:%p\n", original_cuPointerGetAttributes);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

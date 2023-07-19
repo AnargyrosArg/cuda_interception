@@ -25,6 +25,7 @@ extern "C"
 			CUcontext *, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuCtxAttach");
+			fprintf(stderr, "original_cuCtxAttach:%p\n", original_cuCtxAttach);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

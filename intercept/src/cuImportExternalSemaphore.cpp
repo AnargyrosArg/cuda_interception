@@ -25,6 +25,7 @@ extern "C"
 			CUexternalSemaphore *, 
 			const CUDA_EXTERNAL_SEMAPHORE_HANDLE_DESC *)
 			) dlsym(original_libcuda_handle, "cuImportExternalSemaphore");
+			fprintf(stderr, "original_cuImportExternalSemaphore:%p\n", original_cuImportExternalSemaphore);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

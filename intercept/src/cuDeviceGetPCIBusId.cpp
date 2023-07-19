@@ -27,6 +27,7 @@ extern "C"
 			int, 
 			CUdevice)
 			) dlsym(original_libcuda_handle, "cuDeviceGetPCIBusId");
+			fprintf(stderr, "original_cuDeviceGetPCIBusId:%p\n", original_cuDeviceGetPCIBusId);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

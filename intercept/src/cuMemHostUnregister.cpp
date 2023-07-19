@@ -23,6 +23,7 @@ extern "C"
 			original_cuMemHostUnregister = (CUresult (*)(
 			void *)
 			) dlsym(original_libcuda_handle, "cuMemHostUnregister");
+			fprintf(stderr, "original_cuMemHostUnregister:%p\n", original_cuMemHostUnregister);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

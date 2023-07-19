@@ -25,6 +25,7 @@ extern "C"
 			CUfunction, 
 			CUsharedconfig)
 			) dlsym(original_libcuda_handle, "cuFuncSetSharedMemConfig");
+			fprintf(stderr, "original_cuFuncSetSharedMemConfig:%p\n", original_cuFuncSetSharedMemConfig);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

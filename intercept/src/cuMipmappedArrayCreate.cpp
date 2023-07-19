@@ -27,6 +27,7 @@ extern "C"
 			const CUDA_ARRAY3D_DESCRIPTOR *, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuMipmappedArrayCreate");
+			fprintf(stderr, "original_cuMipmappedArrayCreate:%p\n", original_cuMipmappedArrayCreate);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

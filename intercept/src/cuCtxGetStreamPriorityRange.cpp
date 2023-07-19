@@ -25,6 +25,7 @@ extern "C"
 			int *, 
 			int *)
 			) dlsym(original_libcuda_handle, "cuCtxGetStreamPriorityRange");
+			fprintf(stderr, "original_cuCtxGetStreamPriorityRange:%p\n", original_cuCtxGetStreamPriorityRange);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

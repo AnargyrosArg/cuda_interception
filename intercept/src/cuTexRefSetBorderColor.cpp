@@ -25,6 +25,7 @@ extern "C"
 			CUtexref, 
 			float *)
 			) dlsym(original_libcuda_handle, "cuTexRefSetBorderColor");
+			fprintf(stderr, "original_cuTexRefSetBorderColor:%p\n", original_cuTexRefSetBorderColor);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

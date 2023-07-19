@@ -27,6 +27,7 @@ extern "C"
 			CUmodule, 
 			const char *)
 			) dlsym(original_libcuda_handle, "cuModuleGetSurfRef");
+			fprintf(stderr, "original_cuModuleGetSurfRef:%p\n", original_cuModuleGetSurfRef);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

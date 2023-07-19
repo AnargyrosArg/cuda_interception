@@ -23,6 +23,7 @@ extern "C"
 			original_cuGraphExecDestroy = (CUresult (*)(
 			CUgraphExec)
 			) dlsym(original_libcuda_handle, "cuGraphExecDestroy");
+			fprintf(stderr, "original_cuGraphExecDestroy:%p\n", original_cuGraphExecDestroy);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

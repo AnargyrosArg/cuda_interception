@@ -29,6 +29,7 @@ extern "C"
 			CUdevice, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuMemPrefetchAsync");
+			fprintf(stderr, "original_cuMemPrefetchAsync:%p\n", original_cuMemPrefetchAsync);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

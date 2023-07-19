@@ -25,6 +25,7 @@ extern "C"
 			CUgraphicsResource, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuGraphicsResourceSetMapFlags_v2");
+			fprintf(stderr, "original_cuGraphicsResourceSetMapFlags_v2:%p\n", original_cuGraphicsResourceSetMapFlags_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

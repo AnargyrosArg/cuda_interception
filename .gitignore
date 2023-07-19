@@ -1,7 +1,7 @@
 examples/data
 examples/mnist_cpp/build
 examples/mnist_cpp/data
-
+/intercept/save
 # Prerequisites
 *.d
 
@@ -51,3 +51,7 @@ examples/dynamotest/log.txt
 examples/nvml_example/supportedVgpus
 examples/nvml_example/example
 count.txt
+examples/drivertest/log.txt
+intercept/src/cuGraphExecUpdate.cpp
+intercept/dlsym.cpp
+histogram.png

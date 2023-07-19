@@ -39,13 +39,13 @@ extern "C"{
                 original_libcuda_handle = original_dlopen("libcuda.so.1", flag);
             }
             //return our own lib instead
-            retval = original_dlopen("libintercept.so",RTLD_LAZY);
+            retval = original_dlopen("libintercept.so", RTLD_NOW | RTLD_GLOBAL);
             error = dlerror();
             if(error){
                 fprintf(stderr,"Cannot find intercept library: %s\n",error);
-               // fprintf(stderr,"LD_LIBRARY_PATH= %s\n",getenv("LD_LIBRARY_PATH"));
                 exit(-1);
             }
+
         }else if(filename && (strcmp(filename,"libnvrtc.so.11.2")==0)){
             //load libnvrtc for the first time
             if(original_libnvrtc_handle == NULL){
@@ -70,7 +70,7 @@ extern "C"{
         error = dlerror();
         if(error) fprintf(stderr,"Error occured dlopen: %s\n retval:%p\n",error,retval);
     
-        // fprintf(stderr,"dlopen handle for %s : %p\n",filename,retval);
+        //fprintf(stderr,">%s< original handle for libcuda: %p -- actually returning %p\n",filename,original_libcuda_handle,retval);
         return retval;
     }
 }

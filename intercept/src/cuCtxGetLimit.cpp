@@ -25,6 +25,7 @@ extern "C"
 			size_t *, 
 			CUlimit)
 			) dlsym(original_libcuda_handle, "cuCtxGetLimit");
+			fprintf(stderr, "original_cuCtxGetLimit:%p\n", original_cuCtxGetLimit);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

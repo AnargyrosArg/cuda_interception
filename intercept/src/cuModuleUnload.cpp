@@ -23,6 +23,7 @@ extern "C"
 			original_cuModuleUnload = (CUresult (*)(
 			CUmodule)
 			) dlsym(original_libcuda_handle, "cuModuleUnload");
+			fprintf(stderr, "original_cuModuleUnload:%p\n", original_cuModuleUnload);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

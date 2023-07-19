@@ -29,6 +29,7 @@ extern "C"
 			int, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuLaunchGridAsync");
+			fprintf(stderr, "original_cuLaunchGridAsync:%p\n", original_cuLaunchGridAsync);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

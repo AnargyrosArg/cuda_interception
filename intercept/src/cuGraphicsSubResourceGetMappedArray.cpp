@@ -29,6 +29,7 @@ extern "C"
 			unsigned int, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuGraphicsSubResourceGetMappedArray");
+			fprintf(stderr, "original_cuGraphicsSubResourceGetMappedArray:%p\n", original_cuGraphicsSubResourceGetMappedArray);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

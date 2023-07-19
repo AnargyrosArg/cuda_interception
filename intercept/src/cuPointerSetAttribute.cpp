@@ -27,6 +27,7 @@ extern "C"
 			CUpointer_attribute, 
 			CUdeviceptr)
 			) dlsym(original_libcuda_handle, "cuPointerSetAttribute");
+			fprintf(stderr, "original_cuPointerSetAttribute:%p\n", original_cuPointerSetAttribute);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

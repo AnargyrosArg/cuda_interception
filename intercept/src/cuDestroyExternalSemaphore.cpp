@@ -23,6 +23,7 @@ extern "C"
 			original_cuDestroyExternalSemaphore = (CUresult (*)(
 			CUexternalSemaphore)
 			) dlsym(original_libcuda_handle, "cuDestroyExternalSemaphore");
+			fprintf(stderr, "original_cuDestroyExternalSemaphore:%p\n", original_cuDestroyExternalSemaphore);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUsurfObject *, 
 			const CUDA_RESOURCE_DESC *)
 			) dlsym(original_libcuda_handle, "cuSurfObjectCreate");
+			fprintf(stderr, "original_cuSurfObjectCreate:%p\n", original_cuSurfObjectCreate);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

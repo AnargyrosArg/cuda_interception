@@ -23,6 +23,7 @@ extern "C"
 			original_cuStreamQuery = (CUresult (*)(
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuStreamQuery");
+			fprintf(stderr, "original_cuStreamQuery:%p\n", original_cuStreamQuery);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -27,6 +27,7 @@ extern "C"
 			CUhostFn, 
 			void *)
 			) dlsym(original_libcuda_handle, "cuLaunchHostFunc");
+			fprintf(stderr, "original_cuLaunchHostFunc:%p\n", original_cuLaunchHostFunc);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

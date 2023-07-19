@@ -25,6 +25,7 @@ extern "C"
 			CUstream, 
 			CUcontext *)
 			) dlsym(original_libcuda_handle, "cuStreamGetCtx");
+			fprintf(stderr, "original_cuStreamGetCtx:%p\n", original_cuStreamGetCtx);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUDA_RESOURCE_DESC *, 
 			CUtexObject)
 			) dlsym(original_libcuda_handle, "cuTexObjectGetResourceDesc");
+			fprintf(stderr, "original_cuTexObjectGetResourceDesc:%p\n", original_cuTexObjectGetResourceDesc);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -23,6 +23,7 @@ extern "C"
 			original_cuDeviceGetCount = (CUresult (*)(
 			int *)
 			) dlsym(original_libcuda_handle, "cuDeviceGetCount");
+			fprintf(stderr, "original_cuDeviceGetCount:%p\n", original_cuDeviceGetCount);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

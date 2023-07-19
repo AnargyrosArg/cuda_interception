@@ -25,6 +25,7 @@ extern "C"
 			CUcontext *, 
 			CUdevice)
 			) dlsym(original_libcuda_handle, "cuDevicePrimaryCtxRetain");
+			fprintf(stderr, "original_cuDevicePrimaryCtxRetain:%p\n", original_cuDevicePrimaryCtxRetain);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -29,6 +29,7 @@ extern "C"
 			unsigned int, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuWaitExternalSemaphoresAsync");
+			fprintf(stderr, "original_cuWaitExternalSemaphoresAsync:%p\n", original_cuWaitExternalSemaphoresAsync);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -23,6 +23,7 @@ extern "C"
 			original_cuMemcpy2DUnaligned_v2 = (CUresult (*)(
 			const CUDA_MEMCPY2D *)
 			) dlsym(original_libcuda_handle, "cuMemcpy2DUnaligned_v2");
+			fprintf(stderr, "original_cuMemcpy2DUnaligned_v2:%p\n", original_cuMemcpy2DUnaligned_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUevent *, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuEventCreate");
+			fprintf(stderr, "original_cuEventCreate:%p\n", original_cuEventCreate);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

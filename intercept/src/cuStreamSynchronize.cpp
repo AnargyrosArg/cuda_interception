@@ -23,6 +23,7 @@ extern "C"
 			original_cuStreamSynchronize = (CUresult (*)(
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuStreamSynchronize");
+			fprintf(stderr, "original_cuStreamSynchronize:%p\n", original_cuStreamSynchronize);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

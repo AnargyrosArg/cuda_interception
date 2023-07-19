@@ -25,6 +25,7 @@ extern "C"
 			CUipcMemHandle *, 
 			CUdeviceptr)
 			) dlsym(original_libcuda_handle, "cuIpcGetMemHandle");
+			fprintf(stderr, "original_cuIpcGetMemHandle:%p\n", original_cuIpcGetMemHandle);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

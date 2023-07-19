@@ -25,6 +25,7 @@ extern "C"
 			CUstream, 
 			CUstreamCaptureMode)
 			) dlsym(original_libcuda_handle, "cuStreamBeginCapture_v2");
+			fprintf(stderr, "original_cuStreamBeginCapture_v2:%p\n", original_cuStreamBeginCapture_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

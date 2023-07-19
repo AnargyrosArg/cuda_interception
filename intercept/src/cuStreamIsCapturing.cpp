@@ -25,6 +25,7 @@ extern "C"
 			CUstream, 
 			CUstreamCaptureStatus *)
 			) dlsym(original_libcuda_handle, "cuStreamIsCapturing");
+			fprintf(stderr, "original_cuStreamIsCapturing:%p\n", original_cuStreamIsCapturing);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

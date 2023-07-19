@@ -33,6 +33,7 @@ extern "C"
 			CUjit_option *, 
 			void **)
 			) dlsym(original_libcuda_handle, "cuLinkAddFile_v2");
+			fprintf(stderr, "original_cuLinkAddFile_v2:%p\n", original_cuLinkAddFile_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

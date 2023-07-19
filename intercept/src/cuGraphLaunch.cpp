@@ -25,6 +25,7 @@ extern "C"
 			CUgraphExec, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuGraphLaunch");
+			fprintf(stderr, "original_cuGraphLaunch:%p\n", original_cuGraphLaunch);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

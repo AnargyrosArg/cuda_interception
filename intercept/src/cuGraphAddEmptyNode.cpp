@@ -29,6 +29,7 @@ extern "C"
 			const CUgraphNode *, 
 			size_t)
 			) dlsym(original_libcuda_handle, "cuGraphAddEmptyNode");
+			fprintf(stderr, "original_cuGraphAddEmptyNode:%p\n", original_cuGraphAddEmptyNode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

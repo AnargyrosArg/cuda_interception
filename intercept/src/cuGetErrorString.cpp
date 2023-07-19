@@ -25,6 +25,7 @@ extern "C"
 			CUresult, 
 			const char **)
 			) dlsym(original_libcuda_handle, "cuGetErrorString");
+			fprintf(stderr, "original_cuGetErrorString:%p\n", original_cuGetErrorString);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

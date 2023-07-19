@@ -27,6 +27,7 @@ extern "C"
 			CUmipmappedArray, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuTexRefSetMipmappedArray");
+			fprintf(stderr, "original_cuTexRefSetMipmappedArray:%p\n", original_cuTexRefSetMipmappedArray);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

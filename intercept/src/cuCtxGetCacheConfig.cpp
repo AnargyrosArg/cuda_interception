@@ -23,6 +23,7 @@ extern "C"
 			original_cuCtxGetCacheConfig = (CUresult (*)(
 			CUfunc_cache *)
 			) dlsym(original_libcuda_handle, "cuCtxGetCacheConfig");
+			fprintf(stderr, "original_cuCtxGetCacheConfig:%p\n", original_cuCtxGetCacheConfig);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

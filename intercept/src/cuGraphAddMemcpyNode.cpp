@@ -33,6 +33,7 @@ extern "C"
 			const CUDA_MEMCPY3D *, 
 			CUcontext)
 			) dlsym(original_libcuda_handle, "cuGraphAddMemcpyNode");
+			fprintf(stderr, "original_cuGraphAddMemcpyNode:%p\n", original_cuGraphAddMemcpyNode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

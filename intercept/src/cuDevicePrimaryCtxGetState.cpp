@@ -27,6 +27,7 @@ extern "C"
 			unsigned int *, 
 			int *)
 			) dlsym(original_libcuda_handle, "cuDevicePrimaryCtxGetState");
+			fprintf(stderr, "original_cuDevicePrimaryCtxGetState:%p\n", original_cuDevicePrimaryCtxGetState);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

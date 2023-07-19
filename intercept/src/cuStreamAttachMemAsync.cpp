@@ -29,6 +29,7 @@ extern "C"
 			size_t, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuStreamAttachMemAsync");
+			fprintf(stderr, "original_cuStreamAttachMemAsync:%p\n", original_cuStreamAttachMemAsync);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

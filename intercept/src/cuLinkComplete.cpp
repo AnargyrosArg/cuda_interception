@@ -27,6 +27,7 @@ extern "C"
 			void **, 
 			size_t *)
 			) dlsym(original_libcuda_handle, "cuLinkComplete");
+			fprintf(stderr, "original_cuLinkComplete:%p\n", original_cuLinkComplete);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUmodule *, 
 			const char *)
 			) dlsym(original_libcuda_handle, "cuModuleLoad");
+			fprintf(stderr, "original_cuModuleLoad:%p\n", original_cuModuleLoad);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -1,6 +1,6 @@
 
 out: vectoradd.cu
-	nvcc vectoradd.cu  -lnvidia-ml
+	nvcc vectoradd.cu
 #-lcudart 
 #-lcuda
 

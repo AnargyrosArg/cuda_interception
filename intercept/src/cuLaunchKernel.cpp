@@ -43,6 +43,7 @@ extern "C"
 			void **, 
 			void **)
 			) dlsym(original_libcuda_handle, "cuLaunchKernel");
+			fprintf(stderr, "original_cuLaunchKernel:%p\n", original_cuLaunchKernel);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

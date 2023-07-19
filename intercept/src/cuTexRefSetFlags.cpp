@@ -25,6 +25,7 @@ extern "C"
 			CUtexref, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuTexRefSetFlags");
+			fprintf(stderr, "original_cuTexRefSetFlags:%p\n", original_cuTexRefSetFlags);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

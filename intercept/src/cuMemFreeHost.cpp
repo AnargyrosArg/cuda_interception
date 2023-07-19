@@ -23,6 +23,7 @@ extern "C"
 			original_cuMemFreeHost = (CUresult (*)(
 			void *)
 			) dlsym(original_libcuda_handle, "cuMemFreeHost");
+			fprintf(stderr, "original_cuMemFreeHost:%p\n", original_cuMemFreeHost);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

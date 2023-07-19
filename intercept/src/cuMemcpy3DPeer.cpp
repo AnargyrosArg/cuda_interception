@@ -23,6 +23,7 @@ extern "C"
 			original_cuMemcpy3DPeer = (CUresult (*)(
 			const CUDA_MEMCPY3D_PEER *)
 			) dlsym(original_libcuda_handle, "cuMemcpy3DPeer");
+			fprintf(stderr, "original_cuMemcpy3DPeer:%p\n", original_cuMemcpy3DPeer);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

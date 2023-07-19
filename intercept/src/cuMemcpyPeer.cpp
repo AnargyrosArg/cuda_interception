@@ -31,6 +31,7 @@ extern "C"
 			CUcontext, 
 			size_t)
 			) dlsym(original_libcuda_handle, "cuMemcpyPeer");
+			fprintf(stderr, "original_cuMemcpyPeer:%p\n", original_cuMemcpyPeer);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

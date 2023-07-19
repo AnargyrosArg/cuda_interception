@@ -25,6 +25,7 @@ extern "C"
 			CUgraphNode, 
 			CUDA_KERNEL_NODE_PARAMS *)
 			) dlsym(original_libcuda_handle, "cuGraphKernelNodeGetParams");
+			fprintf(stderr, "original_cuGraphKernelNodeGetParams:%p\n", original_cuGraphKernelNodeGetParams);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

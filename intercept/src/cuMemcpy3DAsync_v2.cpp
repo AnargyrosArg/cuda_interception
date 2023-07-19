@@ -25,6 +25,7 @@ extern "C"
 			const CUDA_MEMCPY3D *, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuMemcpy3DAsync_v2");
+			fprintf(stderr, "original_cuMemcpy3DAsync_v2:%p\n", original_cuMemcpy3DAsync_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

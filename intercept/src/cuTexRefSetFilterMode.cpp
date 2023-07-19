@@ -25,6 +25,7 @@ extern "C"
 			CUtexref, 
 			CUfilter_mode)
 			) dlsym(original_libcuda_handle, "cuTexRefSetFilterMode");
+			fprintf(stderr, "original_cuTexRefSetFilterMode:%p\n", original_cuTexRefSetFilterMode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

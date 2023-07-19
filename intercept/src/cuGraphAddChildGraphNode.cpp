@@ -31,6 +31,7 @@ extern "C"
 			size_t, 
 			CUgraph)
 			) dlsym(original_libcuda_handle, "cuGraphAddChildGraphNode");
+			fprintf(stderr, "original_cuGraphAddChildGraphNode:%p\n", original_cuGraphAddChildGraphNode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

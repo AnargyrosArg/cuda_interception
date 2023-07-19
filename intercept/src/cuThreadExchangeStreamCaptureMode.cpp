@@ -23,6 +23,7 @@ extern "C"
 			original_cuThreadExchangeStreamCaptureMode = (CUresult (*)(
 			CUstreamCaptureMode *)
 			) dlsym(original_libcuda_handle, "cuThreadExchangeStreamCaptureMode");
+			fprintf(stderr, "original_cuThreadExchangeStreamCaptureMode:%p\n", original_cuThreadExchangeStreamCaptureMode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

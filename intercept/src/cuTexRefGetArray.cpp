@@ -25,6 +25,7 @@ extern "C"
 			CUarray *, 
 			CUtexref)
 			) dlsym(original_libcuda_handle, "cuTexRefGetArray");
+			fprintf(stderr, "original_cuTexRefGetArray:%p\n", original_cuTexRefGetArray);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

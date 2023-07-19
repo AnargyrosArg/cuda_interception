@@ -25,6 +25,7 @@ extern "C"
 			CUfunction, 
 			CUfunc_cache)
 			) dlsym(original_libcuda_handle, "cuFuncSetCacheConfig");
+			fprintf(stderr, "original_cuFuncSetCacheConfig:%p\n", original_cuFuncSetCacheConfig);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

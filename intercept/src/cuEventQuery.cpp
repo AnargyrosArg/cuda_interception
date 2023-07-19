@@ -23,6 +23,7 @@ extern "C"
 			original_cuEventQuery = (CUresult (*)(
 			CUevent)
 			) dlsym(original_libcuda_handle, "cuEventQuery");
+			fprintf(stderr, "original_cuEventQuery:%p\n", original_cuEventQuery);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

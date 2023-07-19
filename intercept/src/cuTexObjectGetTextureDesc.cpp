@@ -25,6 +25,7 @@ extern "C"
 			CUDA_TEXTURE_DESC *, 
 			CUtexObject)
 			) dlsym(original_libcuda_handle, "cuTexObjectGetTextureDesc");
+			fprintf(stderr, "original_cuTexObjectGetTextureDesc:%p\n", original_cuTexObjectGetTextureDesc);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

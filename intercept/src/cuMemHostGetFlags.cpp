@@ -25,6 +25,7 @@ extern "C"
 			unsigned int *, 
 			void *)
 			) dlsym(original_libcuda_handle, "cuMemHostGetFlags");
+			fprintf(stderr, "original_cuMemHostGetFlags:%p\n", original_cuMemHostGetFlags);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			CUstream, 
 			CUgraph *)
 			) dlsym(original_libcuda_handle, "cuStreamEndCapture");
+			fprintf(stderr, "original_cuStreamEndCapture:%p\n", original_cuStreamEndCapture);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

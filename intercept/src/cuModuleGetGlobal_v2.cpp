@@ -29,6 +29,7 @@ extern "C"
 			CUmodule, 
 			const char *)
 			) dlsym(original_libcuda_handle, "cuModuleGetGlobal_v2");
+			fprintf(stderr, "original_cuModuleGetGlobal_v2:%p\n", original_cuModuleGetGlobal_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

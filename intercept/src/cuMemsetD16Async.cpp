@@ -29,6 +29,7 @@ extern "C"
 			size_t, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuMemsetD16Async");
+			fprintf(stderr, "original_cuMemsetD16Async:%p\n", original_cuMemsetD16Async);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

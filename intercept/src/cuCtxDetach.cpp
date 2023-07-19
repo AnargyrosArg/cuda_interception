@@ -23,6 +23,7 @@ extern "C"
 			original_cuCtxDetach = (CUresult (*)(
 			CUcontext)
 			) dlsym(original_libcuda_handle, "cuCtxDetach");
+			fprintf(stderr, "original_cuCtxDetach:%p\n", original_cuCtxDetach);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

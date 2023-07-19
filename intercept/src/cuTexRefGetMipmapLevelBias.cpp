@@ -25,6 +25,7 @@ extern "C"
 			float *, 
 			CUtexref)
 			) dlsym(original_libcuda_handle, "cuTexRefGetMipmapLevelBias");
+			fprintf(stderr, "original_cuTexRefGetMipmapLevelBias:%p\n", original_cuTexRefGetMipmapLevelBias);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

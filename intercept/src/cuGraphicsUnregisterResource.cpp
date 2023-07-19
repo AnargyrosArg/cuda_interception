@@ -23,6 +23,7 @@ extern "C"
 			original_cuGraphicsUnregisterResource = (CUresult (*)(
 			CUgraphicsResource)
 			) dlsym(original_libcuda_handle, "cuGraphicsUnregisterResource");
+			fprintf(stderr, "original_cuGraphicsUnregisterResource:%p\n", original_cuGraphicsUnregisterResource);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

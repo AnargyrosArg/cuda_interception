@@ -25,6 +25,7 @@ extern "C"
 			CUdeviceptr *, 
 			CUtexref)
 			) dlsym(original_libcuda_handle, "cuTexRefGetAddress_v2");
+			fprintf(stderr, "original_cuTexRefGetAddress_v2:%p\n", original_cuTexRefGetAddress_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

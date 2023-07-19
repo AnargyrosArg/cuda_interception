@@ -25,6 +25,7 @@ extern "C"
 			CUcontext, 
 			unsigned int *)
 			) dlsym(original_libcuda_handle, "cuCtxGetApiVersion");
+			fprintf(stderr, "original_cuCtxGetApiVersion:%p\n", original_cuCtxGetApiVersion);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -25,6 +25,7 @@ extern "C"
 			const CUDA_MEMCPY3D_PEER *, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuMemcpy3DPeerAsync");
+			fprintf(stderr, "original_cuMemcpy3DPeerAsync:%p\n", original_cuMemcpy3DPeerAsync);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

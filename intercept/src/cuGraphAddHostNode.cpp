@@ -31,6 +31,7 @@ extern "C"
 			size_t, 
 			const CUDA_HOST_NODE_PARAMS *)
 			) dlsym(original_libcuda_handle, "cuGraphAddHostNode");
+			fprintf(stderr, "original_cuGraphAddHostNode:%p\n", original_cuGraphAddHostNode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

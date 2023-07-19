@@ -25,6 +25,7 @@ extern "C"
 			size_t *, 
 			size_t *)
 			) dlsym(original_libcuda_handle, "cuMemGetInfo_v2");
+			fprintf(stderr, "original_cuMemGetInfo_v2:%p\n", original_cuMemGetInfo_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

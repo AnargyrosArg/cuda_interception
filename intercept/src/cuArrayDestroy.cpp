@@ -23,6 +23,7 @@ extern "C"
 			original_cuArrayDestroy = (CUresult (*)(
 			CUarray)
 			) dlsym(original_libcuda_handle, "cuArrayDestroy");
+			fprintf(stderr, "original_cuArrayDestroy:%p\n", original_cuArrayDestroy);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -23,6 +23,7 @@ extern "C"
 			original_cuCtxSetSharedMemConfig = (CUresult (*)(
 			CUsharedconfig)
 			) dlsym(original_libcuda_handle, "cuCtxSetSharedMemConfig");
+			fprintf(stderr, "original_cuCtxSetSharedMemConfig:%p\n", original_cuCtxSetSharedMemConfig);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

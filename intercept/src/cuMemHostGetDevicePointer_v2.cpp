@@ -27,6 +27,7 @@ extern "C"
 			void *, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuMemHostGetDevicePointer_v2");
+			fprintf(stderr, "original_cuMemHostGetDevicePointer_v2:%p\n", original_cuMemHostGetDevicePointer_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

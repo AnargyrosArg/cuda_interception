@@ -27,6 +27,7 @@ extern "C"
 			CUmipmappedArray, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuMipmappedArrayGetLevel");
+			fprintf(stderr, "original_cuMipmappedArrayGetLevel:%p\n", original_cuMipmappedArrayGetLevel);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

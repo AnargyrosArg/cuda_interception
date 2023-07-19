@@ -27,6 +27,7 @@ extern "C"
 			CUgraphNode *, 
 			size_t *)
 			) dlsym(original_libcuda_handle, "cuGraphNodeGetDependencies");
+			fprintf(stderr, "original_cuGraphNodeGetDependencies:%p\n", original_cuGraphNodeGetDependencies);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

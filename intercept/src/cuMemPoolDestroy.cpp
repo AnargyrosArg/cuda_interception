@@ -1,15 +1,15 @@
 #include <cuda.h>
 #include <dlfcn.h>
 #include <iostream>
-CUresult (*original_cuDevicePrimaryCtxReset)(
-CUdevice
+CUresult (*original_cuMemPoolDestroy)(
+CUmemoryPool
 );
 //handle to the actual libcuda library, used to fetch original functions with dlsym
 extern void* original_libcuda_handle;
 extern "C"
 {
-	CUresult cuDevicePrimaryCtxReset(CUdevice dev) {
-		fprintf(stderr, "cuDevicePrimaryCtxReset()\n");
+	CUresult cuMemPoolDestroy(CUmemoryPool pool) {
+		fprintf(stderr, "cuMemPoolDestroy()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -17,20 +17,21 @@ extern "C"
 		if(original_libcuda_handle == NULL){
 			dlopen("libcuda.so.1", RTLD_NOW);
 		}
-		if (!original_cuDevicePrimaryCtxReset)
+		if (!original_cuMemPoolDestroy)
 		{
 			//fetch the original function addr using dlsym
-			original_cuDevicePrimaryCtxReset = (CUresult (*)(
-			CUdevice)
-			) dlsym(original_libcuda_handle, "cuDevicePrimaryCtxReset");
+			original_cuMemPoolDestroy = (CUresult (*)(
+			CUmemoryPool)
+			) dlsym(original_libcuda_handle, "cuMemPoolDestroy");
+			fprintf(stderr, "original_cuMemPoolDestroy:%p\n", original_cuMemPoolDestroy);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){
-			fprintf(stderr, "dlsym error for function cuDevicePrimaryCtxReset():%s\n", __dlerror);
+			fprintf(stderr, "dlsym error for function cuMemPoolDestroy():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDevicePrimaryCtxReset(
-		dev
+		return original_cuMemPoolDestroy(
+		pool
 		);
 	}
 }

@@ -25,6 +25,7 @@ extern "C"
 			CUarray *, 
 			const CUDA_ARRAY_DESCRIPTOR *)
 			) dlsym(original_libcuda_handle, "cuArrayCreate_v2");
+			fprintf(stderr, "original_cuArrayCreate_v2:%p\n", original_cuArrayCreate_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

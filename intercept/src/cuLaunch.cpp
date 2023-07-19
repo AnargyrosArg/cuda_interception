@@ -23,6 +23,7 @@ extern "C"
 			original_cuLaunch = (CUresult (*)(
 			CUfunction)
 			) dlsym(original_libcuda_handle, "cuLaunch");
+			fprintf(stderr, "original_cuLaunch:%p\n", original_cuLaunch);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

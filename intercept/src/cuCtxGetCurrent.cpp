@@ -23,6 +23,7 @@ extern "C"
 			original_cuCtxGetCurrent = (CUresult (*)(
 			CUcontext *)
 			) dlsym(original_libcuda_handle, "cuCtxGetCurrent");
+			fprintf(stderr, "original_cuCtxGetCurrent:%p\n", original_cuCtxGetCurrent);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -27,6 +27,7 @@ extern "C"
 			size_t *, 
 			CUgraphicsResource)
 			) dlsym(original_libcuda_handle, "cuGraphicsResourceGetMappedPointer_v2");
+			fprintf(stderr, "original_cuGraphicsResourceGetMappedPointer_v2:%p\n", original_cuGraphicsResourceGetMappedPointer_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

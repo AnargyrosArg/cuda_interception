@@ -23,6 +23,7 @@ extern "C"
 			original_cuIpcCloseMemHandle = (CUresult (*)(
 			CUdeviceptr)
 			) dlsym(original_libcuda_handle, "cuIpcCloseMemHandle");
+			fprintf(stderr, "original_cuIpcCloseMemHandle:%p\n", original_cuIpcCloseMemHandle);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -29,6 +29,7 @@ extern "C"
 			CUdevice, 
 			CUdevice)
 			) dlsym(original_libcuda_handle, "cuDeviceGetP2PAttribute");
+			fprintf(stderr, "original_cuDeviceGetP2PAttribute:%p\n", original_cuDeviceGetP2PAttribute);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

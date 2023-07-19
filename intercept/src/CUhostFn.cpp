@@ -23,6 +23,7 @@ extern "C"
 			original_CUhostFn = (void (*)(
 			void *)
 			) dlsym(original_libcuda_handle, "CUhostFn");
+			fprintf(stderr, "original_CUhostFn:%p\n", original_CUhostFn);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

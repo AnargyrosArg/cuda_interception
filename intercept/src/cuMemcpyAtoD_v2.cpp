@@ -29,6 +29,7 @@ extern "C"
 			size_t, 
 			size_t)
 			) dlsym(original_libcuda_handle, "cuMemcpyAtoD_v2");
+			fprintf(stderr, "original_cuMemcpyAtoD_v2:%p\n", original_cuMemcpyAtoD_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

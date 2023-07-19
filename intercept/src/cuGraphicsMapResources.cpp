@@ -27,6 +27,7 @@ extern "C"
 			CUgraphicsResource *, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuGraphicsMapResources");
+			fprintf(stderr, "original_cuGraphicsMapResources:%p\n", original_cuGraphicsMapResources);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -23,6 +23,7 @@ extern "C"
 			original_cuCtxGetFlags = (CUresult (*)(
 			unsigned int *)
 			) dlsym(original_libcuda_handle, "cuCtxGetFlags");
+			fprintf(stderr, "original_cuCtxGetFlags:%p\n", original_cuCtxGetFlags);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

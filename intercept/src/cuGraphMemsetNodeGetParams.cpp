@@ -25,6 +25,7 @@ extern "C"
 			CUgraphNode, 
 			CUDA_MEMSET_NODE_PARAMS *)
 			) dlsym(original_libcuda_handle, "cuGraphMemsetNodeGetParams");
+			fprintf(stderr, "original_cuGraphMemsetNodeGetParams:%p\n", original_cuGraphMemsetNodeGetParams);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

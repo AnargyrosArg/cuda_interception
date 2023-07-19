@@ -25,6 +25,7 @@ extern "C"
 			CUtexref, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuTexRefSetMaxAnisotropy");
+			fprintf(stderr, "original_cuTexRefSetMaxAnisotropy:%p\n", original_cuTexRefSetMaxAnisotropy);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

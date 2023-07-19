@@ -31,6 +31,7 @@ extern "C"
 			size_t, 
 			CUstream)
 			) dlsym(original_libcuda_handle, "cuMemcpyHtoAAsync_v2");
+			fprintf(stderr, "original_cuMemcpyHtoAAsync_v2:%p\n", original_cuMemcpyHtoAAsync_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

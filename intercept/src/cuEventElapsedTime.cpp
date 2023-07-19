@@ -27,6 +27,7 @@ extern "C"
 			CUevent, 
 			CUevent)
 			) dlsym(original_libcuda_handle, "cuEventElapsedTime");
+			fprintf(stderr, "original_cuEventElapsedTime:%p\n", original_cuEventElapsedTime);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

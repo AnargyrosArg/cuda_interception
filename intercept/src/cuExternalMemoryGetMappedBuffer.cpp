@@ -27,6 +27,7 @@ extern "C"
 			CUexternalMemory, 
 			const CUDA_EXTERNAL_MEMORY_BUFFER_DESC *)
 			) dlsym(original_libcuda_handle, "cuExternalMemoryGetMappedBuffer");
+			fprintf(stderr, "original_cuExternalMemoryGetMappedBuffer:%p\n", original_cuExternalMemoryGetMappedBuffer);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

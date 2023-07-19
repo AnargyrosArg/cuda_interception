@@ -27,6 +27,7 @@ extern "C"
 			CUdevice, 
 			CUdevice)
 			) dlsym(original_libcuda_handle, "cuDeviceCanAccessPeer");
+			fprintf(stderr, "original_cuDeviceCanAccessPeer:%p\n", original_cuDeviceCanAccessPeer);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

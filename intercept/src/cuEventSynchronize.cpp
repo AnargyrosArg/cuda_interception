@@ -23,6 +23,7 @@ extern "C"
 			original_cuEventSynchronize = (CUresult (*)(
 			CUevent)
 			) dlsym(original_libcuda_handle, "cuEventSynchronize");
+			fprintf(stderr, "original_cuEventSynchronize:%p\n", original_cuEventSynchronize);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

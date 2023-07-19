@@ -25,6 +25,7 @@ extern "C"
 			CUarray *, 
 			CUsurfref)
 			) dlsym(original_libcuda_handle, "cuSurfRefGetArray");
+			fprintf(stderr, "original_cuSurfRefGetArray:%p\n", original_cuSurfRefGetArray);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

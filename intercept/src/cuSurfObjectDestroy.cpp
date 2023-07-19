@@ -23,6 +23,7 @@ extern "C"
 			original_cuSurfObjectDestroy = (CUresult (*)(
 			CUsurfObject)
 			) dlsym(original_libcuda_handle, "cuSurfObjectDestroy");
+			fprintf(stderr, "original_cuSurfObjectDestroy:%p\n", original_cuSurfObjectDestroy);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

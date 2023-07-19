@@ -23,6 +23,7 @@ extern "C"
 			original_CUoccupancyB2DSize = (size_t (*)(
 			int)
 			) dlsym(original_libcuda_handle, "CUoccupancyB2DSize");
+			fprintf(stderr, "original_CUoccupancyB2DSize:%p\n", original_CUoccupancyB2DSize);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

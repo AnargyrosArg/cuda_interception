@@ -27,6 +27,7 @@ extern "C"
 			CUresult, 
 			void *)
 			) dlsym(original_libcuda_handle, "CUstreamCallback");
+			fprintf(stderr, "original_CUstreamCallback:%p\n", original_CUstreamCallback);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

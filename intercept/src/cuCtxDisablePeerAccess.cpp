@@ -23,6 +23,7 @@ extern "C"
 			original_cuCtxDisablePeerAccess = (CUresult (*)(
 			CUcontext)
 			) dlsym(original_libcuda_handle, "cuCtxDisablePeerAccess");
+			fprintf(stderr, "original_cuCtxDisablePeerAccess:%p\n", original_cuCtxDisablePeerAccess);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

@@ -29,6 +29,7 @@ extern "C"
 			CUgraphNode *, 
 			size_t *)
 			) dlsym(original_libcuda_handle, "cuGraphGetEdges");
+			fprintf(stderr, "original_cuGraphGetEdges:%p\n", original_cuGraphGetEdges);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

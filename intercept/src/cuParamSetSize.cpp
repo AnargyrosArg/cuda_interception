@@ -25,6 +25,7 @@ extern "C"
 			CUfunction, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuParamSetSize");
+			fprintf(stderr, "original_cuParamSetSize:%p\n", original_cuParamSetSize);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

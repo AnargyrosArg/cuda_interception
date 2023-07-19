@@ -29,6 +29,7 @@ extern "C"
 			void **, 
 			CUlinkState *)
 			) dlsym(original_libcuda_handle, "cuLinkCreate_v2");
+			fprintf(stderr, "original_cuLinkCreate_v2:%p\n", original_cuLinkCreate_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

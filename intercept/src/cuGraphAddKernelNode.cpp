@@ -31,6 +31,7 @@ extern "C"
 			size_t, 
 			const CUDA_KERNEL_NODE_PARAMS *)
 			) dlsym(original_libcuda_handle, "cuGraphAddKernelNode");
+			fprintf(stderr, "original_cuGraphAddKernelNode:%p\n", original_cuGraphAddKernelNode);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

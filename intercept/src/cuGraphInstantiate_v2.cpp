@@ -1,7 +1,7 @@
 #include <cuda.h>
 #include <dlfcn.h>
 #include <iostream>
-CUresult (*original_cuGraphInstantiate)(
+CUresult (*original_cuGraphInstantiate_v2)(
 CUgraphExec *, 
 CUgraph, 
 CUgraphNode *, 
@@ -12,8 +12,8 @@ size_t
 extern void* original_libcuda_handle;
 extern "C"
 {
-	CUresult cuGraphInstantiate(CUgraphExec *phGraphExec, CUgraph hGraph, CUgraphNode *phErrorNode, char *logBuffer, size_t bufferSize) {
-		fprintf(stderr, "cuGraphInstantiate()\n");
+	CUresult cuGraphInstantiate_v2(CUgraphExec *phGraphExec, CUgraph hGraph, CUgraphNode *phErrorNode, char *logBuffer, size_t bufferSize) {
+		fprintf(stderr, "cuGraphInstantiate_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -21,23 +21,24 @@ extern "C"
 		if(original_libcuda_handle == NULL){
 			dlopen("libcuda.so.1", RTLD_NOW);
 		}
-		if (!original_cuGraphInstantiate)
+		if (!original_cuGraphInstantiate_v2)
 		{
 			//fetch the original function addr using dlsym
-			original_cuGraphInstantiate = (CUresult (*)(
+			original_cuGraphInstantiate_v2 = (CUresult (*)(
 			CUgraphExec *, 
 			CUgraph, 
 			CUgraphNode *, 
 			char *, 
 			size_t)
-			) dlsym(original_libcuda_handle, "cuGraphInstantiate");
+			) dlsym(original_libcuda_handle, "cuGraphInstantiate_v2");
+			fprintf(stderr, "original_cuGraphInstantiate_v2:%p\n", original_cuGraphInstantiate_v2);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){
-			fprintf(stderr, "dlsym error for function cuGraphInstantiate():%s\n", __dlerror);
+			fprintf(stderr, "dlsym error for function cuGraphInstantiate_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphInstantiate(
+		return original_cuGraphInstantiate_v2(
 		phGraphExec, 
 		hGraph, 
 		phErrorNode, 

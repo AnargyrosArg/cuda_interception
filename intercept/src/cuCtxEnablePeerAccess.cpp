@@ -25,6 +25,7 @@ extern "C"
 			CUcontext, 
 			unsigned int)
 			) dlsym(original_libcuda_handle, "cuCtxEnablePeerAccess");
+			fprintf(stderr, "original_cuCtxEnablePeerAccess:%p\n", original_cuCtxEnablePeerAccess);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){

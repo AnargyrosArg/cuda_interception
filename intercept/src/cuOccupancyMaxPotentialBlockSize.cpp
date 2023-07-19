@@ -33,6 +33,7 @@ extern "C"
 			size_t, 
 			int)
 			) dlsym(original_libcuda_handle, "cuOccupancyMaxPotentialBlockSize");
+			fprintf(stderr, "original_cuOccupancyMaxPotentialBlockSize:%p\n", original_cuOccupancyMaxPotentialBlockSize);
 		}
 		__dlerror = dlerror();
 		if(__dlerror){
