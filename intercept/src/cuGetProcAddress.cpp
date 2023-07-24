@@ -12,9 +12,11 @@ extern "C"
 {
 	CUresult cuGetProcAddress(const char *symbol, void **pfn, int cudaVersion, cuuint64_t flags) {
 		char* __dlerror;
+		fprintf(stderr, "cuGetProcAddress() called for symbol %s\n",symbol);
+		//return CUDA_ERROR_NOT_FOUND;
 		//this call clears any previous errors
 		dlerror();
-		//this calls the intercepted dlopen function which initializes the handle to libcuda (original_libcuda_handle)
+		//	this calls the intercepted dlopen function which initializes the handle to libcuda (original_libcuda_handle)
 		if(original_libcuda_handle == NULL){
 			dlopen("libcuda.so.1", RTLD_NOW);
 		}
@@ -25,9 +27,8 @@ extern "C"
 		}
 		__dlerror = dlerror();
 		if(__dlerror) fprintf(stderr, "dlsym error for function cuGetProcAddress():%s\n", __dlerror);
-		//CUresult res =  original_cuGetProcAddress(symbol, pfn, cudaVersion, flags);
-		fprintf(stderr, "cuGetProcAddress() called for symbol %s\n",symbol);
 
+		//CUresult res =  original_cuGetProcAddress(symbol, pfn, cudaVersion, flags);
 		//return res;
 		CUresult res = CUDA_SUCCESS;
 		void* handle;
@@ -50,7 +51,7 @@ extern "C"
 				*pfn = dlsym(handle,"cuCtxCreate_v3");
 			}else{
 				pfn = NULL;
-				return CUDA_ERROR_NOT_SUPPORTED;
+				return CUDA_ERROR_NOT_FOUND;
 			}
 			return CUDA_SUCCESS;
 		}
@@ -78,7 +79,7 @@ extern "C"
 			__dlerror = dlerror();
 			if(__dlerror){
 				fprintf(stderr,"dlsym:%s\n",__dlerror);
-				res = CUDA_ERROR_NOT_SUPPORTED;
+				res = CUDA_ERROR_NOT_FOUND;
 			}
 			return res;
 		}

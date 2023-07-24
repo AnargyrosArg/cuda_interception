@@ -49,6 +49,7 @@ extern "C"{
             if(original_libcuda_handle == NULL){
                 fprintf(stderr,"Interceptor just dlopened libcuda for the first time\n");
                 original_libcuda_handle = original_dlopen("libcuda.so.1", flag);
+                fprintf(stderr,"original libcuda handle:%p\n",original_libcuda_handle);
             }
             //return our own lib instead
             retval = libintercept_handle;
@@ -77,7 +78,7 @@ extern "C"{
         error = dlerror();
         if(error) fprintf(stderr,"Error occured dlopen: %s\n retval:%p\n",error,retval);
     
-        //fprintf(stderr,">%s< original handle for libcuda: %p -- actually returning %p\n",filename,original_libcuda_handle,retval);
+        fprintf(stderr,"handle returned for %s -> %p\n",filename,retval);
         return retval;
     }
 }

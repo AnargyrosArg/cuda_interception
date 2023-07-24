@@ -73,3 +73,5 @@ func_complexity.txt
 imagenet_count.txt
 mnistcpp.txt
 examples/imagenet/extract_ILSVRC.sh
+log2.txt
+log1.txt
