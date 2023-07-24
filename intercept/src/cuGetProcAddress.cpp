@@ -3,14 +3,11 @@
 #include <iostream>
 #include <string.h>
 
-CUresult (*original_cuGetProcAddress)(
-const char *, 
-void **, 
-int, 
-cuuint64_t
-);
+CUresult (*original_cuGetProcAddress)(const char *, void **, int, cuuint64_t);
+
 //handle to the actual libcuda library, used to fetch original functions with dlsym
 extern void* original_libcuda_handle;
+extern void* libintercept_handle;
 extern "C"
 {
 	CUresult cuGetProcAddress(const char *symbol, void **pfn, int cudaVersion, cuuint64_t flags) {
@@ -21,38 +18,45 @@ extern "C"
 		if(original_libcuda_handle == NULL){
 			dlopen("libcuda.so.1", RTLD_NOW);
 		}
-		if (!original_cuGetProcAddress)
-		{
+		if (!original_cuGetProcAddress){
 			//fetch the original function addr using dlsym
-			original_cuGetProcAddress = (CUresult (*)(
-			const char *, 
-			void **, 
-			int, 
-			cuuint64_t)
-			) dlsym(original_libcuda_handle, "cuGetProcAddress");
-			fprintf(stderr, "original cuGetProcAddress:%p\n", original_cuGetProcAddress);
+			original_cuGetProcAddress = (CUresult (*)(const char *, void **, int, cuuint64_t)) dlsym(original_libcuda_handle, "cuGetProcAddress");
+			fprintf(stderr, "original cuGetProcAddress address as returned by dlsym:%p\n", original_cuGetProcAddress);
 		}
 		__dlerror = dlerror();
-		if(__dlerror){
-			fprintf(stderr, "dlsym error for function cuGetProcAddress():%s\n", __dlerror);
-			fflush(stderr);
-		}
-		CUresult res =  original_cuGetProcAddress(
-		symbol, 
-		pfn, 
-		cudaVersion, 
-		flags
-		);
+		if(__dlerror) fprintf(stderr, "dlsym error for function cuGetProcAddress():%s\n", __dlerror);
+		//CUresult res =  original_cuGetProcAddress(symbol, pfn, cudaVersion, flags);
+		fprintf(stderr, "cuGetProcAddress() called for symbol %s\n",symbol);
 
-		
-		fprintf(stderr, "cuGetProcAddress() for symbol %s --- %p\n",symbol,*pfn);
-		void* handle = dlopen("/home1/public/argyrosan/cuda_interception/intercept/libintercept.so",RTLD_NOW);
-		__dlerror =dlerror();
-		if(__dlerror){
-			fprintf(stderr, "dlopen error for function cuGetProcAddress():%s\n", __dlerror);
-			fflush(stderr);
+		//return res;
+		CUresult res = CUDA_SUCCESS;
+		void* handle;
+		if(libintercept_handle ==NULL){
+			handle = dlopen("libintercept.so",RTLD_NOW);
+			libintercept_handle = handle;
+		}else{
+			handle = libintercept_handle;
 		}
-		*pfn = dlsym(handle,symbol);	
+		__dlerror = dlerror();
+		if(__dlerror) fprintf(stderr, "dlopen:%s\n", __dlerror);
+		
+		// 2000-3010 3020-11030 11040+
+		if(!strcmp(symbol,"cuCtxCreate")){
+			if(cudaVersion >= 2000 && cudaVersion <= 3010){
+				*pfn = dlsym(handle,"cuCtxCreate");
+			}else if(cudaVersion >= 3020 && cudaVersion <= 11030){
+				*pfn = dlsym(handle,"cuCtxCreate_v2");
+			}else if(cudaVersion >= 11040){
+				*pfn = dlsym(handle,"cuCtxCreate_v3");
+			}else{
+				pfn = NULL;
+				return CUDA_ERROR_NOT_SUPPORTED;
+			}
+			return CUDA_SUCCESS;
+		}
+
+		*pfn = dlsym(handle,symbol);
+		
 		__dlerror = dlerror();
 		if(__dlerror){
 			char symbol2[strlen(symbol)+4];
@@ -67,15 +71,17 @@ extern "C"
 			
 			__dlerror = dlerror();
 			if(__dlerror){
-				fprintf(stderr, "dlopen error for function cuGetProcAddress():%s\n", __dlerror);
+				symbol2[strlen(symbol)+2] = '3';
+				*pfn = dlsym(handle,symbol2);
 			}
 
-
-
-			fprintf(stderr, "instead returning %s --- %p\n",symbol2,*pfn);
+			__dlerror = dlerror();
+			if(__dlerror){
+				fprintf(stderr,"dlsym:%s\n",__dlerror);
+				res = CUDA_ERROR_NOT_SUPPORTED;
+			}
 			return res;
 		}
-		fprintf(stderr, "instead returning %s --- %p\n",symbol,*pfn);
 		return res;
 	}
 }

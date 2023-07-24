@@ -11,13 +11,15 @@ void* original_libcuda_handle = NULL;
 //handle for nvrtc lib
 void* original_libnvrtc_handle = NULL;
 
+void* libintercept_handle = NULL;
+
+
 extern "C"{
     void *dlopen(const char *filename, int flag){
         char* error;
         void* retval;
 
         fprintf(stderr,"dlopen intercepted filename: %s and flag: %d\n",filename,flag);
-
         //this call potentially clears previous errors that might have occured with dlopen,dlsym or dlclose
         dlerror();
 
@@ -30,16 +32,26 @@ extern "C"{
                 exit(-1);
             }
         }
+        if(libintercept_handle == NULL){
+            libintercept_handle = original_dlopen("libintercept.so",flag);
+            error = dlerror();
+            if(error){
+                fprintf(stderr,"Cannot find intercept library: %s\n",error);
+               // fprintf(stderr,"LD_LIBRARY_PATH= %s\n",getenv("LD_LIBRARY_PATH"));
+                exit(-1);
+            }
+        }
 
         //detect when a library attempts to load libcuda and instead, return our own.
         if(filename && (strcmp(filename,"libcuda.so.1")==0)){
             //if original libcuda has never been loaded before, we open it and keep a handle to it for internal use
             //this handle is not returned to the calling function
             if(original_libcuda_handle == NULL){
+                fprintf(stderr,"Interceptor just dlopened libcuda for the first time\n");
                 original_libcuda_handle = original_dlopen("libcuda.so.1", flag);
             }
             //return our own lib instead
-            retval = original_dlopen("libintercept.so", RTLD_NOW | RTLD_GLOBAL);
+            retval = libintercept_handle;
             error = dlerror();
             if(error){
                 fprintf(stderr,"Cannot find intercept library: %s\n",error);
@@ -49,18 +61,13 @@ extern "C"{
         }else if(filename && (strcmp(filename,"libnvrtc.so.11.2")==0)){
             //load libnvrtc for the first time
             if(original_libnvrtc_handle == NULL){
-                original_libnvrtc_handle = original_dlopen("libnvrtc.so.11.2", flag);
+                original_libnvrtc_handle = original_dlopen(filename, flag);
                 error = dlerror();
-                if(error) fprintf(stderr,"dlopen libnvrtc: %s\n",error);
+                if(error) fprintf(stderr,"dlopen libnvrtc.so.11.2: %s\n",error);
             }
             //return our own lib instead
-            retval = original_dlopen("libintercept.so",flag);
-            error = dlerror();
-            if(error){
-                fprintf(stderr,"Cannot find intercept library: %s\n",error);
-               // fprintf(stderr,"LD_LIBRARY_PATH= %s\n",getenv("LD_LIBRARY_PATH"));
-                exit(-1);
-            }
+            retval = libintercept_handle;
+            
         }else{
             retval =  original_dlopen(filename,flag);
         }

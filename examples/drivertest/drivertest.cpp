@@ -44,7 +44,7 @@ void initCUDA()
     int deviceCount = 0;
     CUresult err = cuInit(0);
     int major = 0, minor = 0;
-
+    
     if (err == CUDA_SUCCESS)
         checkCudaErrors(cuDeviceGetCount(&deviceCount));
 
