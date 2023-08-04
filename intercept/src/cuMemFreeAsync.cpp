@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemFreeAsync(CUdeviceptr dptr, CUstream hStream) {
-		fprintf(stderr, "cuMemFreeAsync()\n");
+		fprintf(stderr, "===============\ncuMemFreeAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemFreeAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemFreeAsync(
+		CUresult retval = original_cuMemFreeAsync(
 		dptr, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

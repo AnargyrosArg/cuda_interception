@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuParamSetTexRef(CUfunction hfunc, int texunit, CUtexref hTexRef) {
-		fprintf(stderr, "cuParamSetTexRef()\n");
+		fprintf(stderr, "===============\ncuParamSetTexRef()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuParamSetTexRef():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuParamSetTexRef(
+		CUresult retval = original_cuParamSetTexRef(
 		hfunc, 
 		texunit, 
 		hTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

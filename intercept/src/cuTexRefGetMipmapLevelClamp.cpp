@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefGetMipmapLevelClamp(float *pminMipmapLevelClamp, float *pmaxMipmapLevelClamp, CUtexref hTexRef) {
-		fprintf(stderr, "cuTexRefGetMipmapLevelClamp()\n");
+		fprintf(stderr, "===============\ncuTexRefGetMipmapLevelClamp()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefGetMipmapLevelClamp():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefGetMipmapLevelClamp(
+		CUresult retval = original_cuTexRefGetMipmapLevelClamp(
 		pminMipmapLevelClamp, 
 		pmaxMipmapLevelClamp, 
 		hTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

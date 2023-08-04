@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemcpyDtoD_v2(CUdeviceptr dstDevice, CUdeviceptr srcDevice, size_t ByteCount) {
-		fprintf(stderr, "cuMemcpyDtoD_v2()\n");
+		fprintf(stderr, "===============\ncuMemcpyDtoD_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemcpyDtoD_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemcpyDtoD_v2(
+		CUresult retval = original_cuMemcpyDtoD_v2(
 		dstDevice, 
 		srcDevice, 
 		ByteCount
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

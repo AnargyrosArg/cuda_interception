@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDestroyExternalMemory(CUexternalMemory extMem) {
-		fprintf(stderr, "cuDestroyExternalMemory()\n");
+		fprintf(stderr, "===============\ncuDestroyExternalMemory()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDestroyExternalMemory():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDestroyExternalMemory(
+		CUresult retval = original_cuDestroyExternalMemory(
 		extMem
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

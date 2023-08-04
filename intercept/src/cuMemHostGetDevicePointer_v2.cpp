@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemHostGetDevicePointer_v2(CUdeviceptr *pdptr, void *p, unsigned int Flags) {
-		fprintf(stderr, "cuMemHostGetDevicePointer_v2()\n");
+		fprintf(stderr, "===============\ncuMemHostGetDevicePointer_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemHostGetDevicePointer_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemHostGetDevicePointer_v2(
+		CUresult retval = original_cuMemHostGetDevicePointer_v2(
 		pdptr, 
 		p, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

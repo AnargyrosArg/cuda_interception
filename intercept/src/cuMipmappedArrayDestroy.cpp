@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMipmappedArrayDestroy(CUmipmappedArray hMipmappedArray) {
-		fprintf(stderr, "cuMipmappedArrayDestroy()\n");
+		fprintf(stderr, "===============\ncuMipmappedArrayDestroy()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMipmappedArrayDestroy():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMipmappedArrayDestroy(
+		CUresult retval = original_cuMipmappedArrayDestroy(
 		hMipmappedArray
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

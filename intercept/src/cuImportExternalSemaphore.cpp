@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuImportExternalSemaphore(CUexternalSemaphore *extSem_out, const CUDA_EXTERNAL_SEMAPHORE_HANDLE_DESC *semHandleDesc) {
-		fprintf(stderr, "cuImportExternalSemaphore()\n");
+		fprintf(stderr, "===============\ncuImportExternalSemaphore()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuImportExternalSemaphore():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuImportExternalSemaphore(
+		CUresult retval = original_cuImportExternalSemaphore(
 		extSem_out, 
 		semHandleDesc
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

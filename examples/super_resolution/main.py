@@ -23,7 +23,6 @@ parser.add_argument('--seed', type=int, default=123, help='random seed to use. D
 opt = parser.parse_args()
 
 print(opt)
-torch.backends.cudnn.enabled = False
 
 if opt.cuda and not torch.cuda.is_available():
     raise Exception("No GPU found, please run without --cuda")

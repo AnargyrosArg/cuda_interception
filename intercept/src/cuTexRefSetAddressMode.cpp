@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefSetAddressMode(CUtexref hTexRef, int dim, CUaddress_mode am) {
-		fprintf(stderr, "cuTexRefSetAddressMode()\n");
+		fprintf(stderr, "===============\ncuTexRefSetAddressMode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefSetAddressMode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefSetAddressMode(
+		CUresult retval = original_cuTexRefSetAddressMode(
 		hTexRef, 
 		dim, 
 		am
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

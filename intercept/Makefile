@@ -12,10 +12,9 @@ CWD = $(shell pwd)
 interceptlib.so: $(OBJ_FILES) #-Wl,-soname,libcuda.so.515.43.04
 	g++ $(OBJ_FILES) -o libintercept.so -fPIC -shared -D_GNU_SOURCE -Wl,-rpath,'$(CWD)' -Wl,-rpath,'/home1/public/argyrosan/.local/lib/python3.9/site-packages/torch/lib/'
 
-
 #Compiles each source file into its object file individually 
 $(BUILD_DIR)/%.o : $(SRC)/%.cpp $(BUILD_DIR)
-	g++ -O3 -I${CUDA_HOME}/include -fPIC -shared -D_GNU_SOURCE  -c $< -o $@
+	g++ -O3 -I${CUDA_HOME}/include -g -fPIC -shared -D_GNU_SOURCE  -c $< -o $@
 
 
 clean:

@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuParamSetSize(CUfunction hfunc, unsigned int numbytes) {
-		fprintf(stderr, "cuParamSetSize()\n");
+		fprintf(stderr, "===============\ncuParamSetSize()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuParamSetSize():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuParamSetSize(
+		CUresult retval = original_cuParamSetSize(
 		hfunc, 
 		numbytes
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

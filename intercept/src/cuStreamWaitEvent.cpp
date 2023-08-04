@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamWaitEvent(CUstream hStream, CUevent hEvent, unsigned int Flags) {
-		fprintf(stderr, "cuStreamWaitEvent()\n");
+		fprintf(stderr, "===============\ncuStreamWaitEvent()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamWaitEvent():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamWaitEvent(
+		CUresult retval = original_cuStreamWaitEvent(
 		hStream, 
 		hEvent, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

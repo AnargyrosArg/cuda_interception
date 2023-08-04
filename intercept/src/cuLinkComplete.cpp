@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuLinkComplete(CUlinkState state, void **cubinOut, size_t *sizeOut) {
-		fprintf(stderr, "cuLinkComplete()\n");
+		fprintf(stderr, "===============\ncuLinkComplete()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuLinkComplete():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuLinkComplete(
+		CUresult retval = original_cuLinkComplete(
 		state, 
 		cubinOut, 
 		sizeOut
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphNodeFindInClone(CUgraphNode *phNode, CUgraphNode hOriginalNode, CUgraph hClonedGraph) {
-		fprintf(stderr, "cuGraphNodeFindInClone()\n");
+		fprintf(stderr, "===============\ncuGraphNodeFindInClone()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphNodeFindInClone():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphNodeFindInClone(
+		CUresult retval = original_cuGraphNodeFindInClone(
 		phNode, 
 		hOriginalNode, 
 		hClonedGraph
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

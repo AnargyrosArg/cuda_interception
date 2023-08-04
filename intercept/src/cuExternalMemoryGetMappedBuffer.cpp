@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuExternalMemoryGetMappedBuffer(CUdeviceptr *devPtr, CUexternalMemory extMem, const CUDA_EXTERNAL_MEMORY_BUFFER_DESC *bufferDesc) {
-		fprintf(stderr, "cuExternalMemoryGetMappedBuffer()\n");
+		fprintf(stderr, "===============\ncuExternalMemoryGetMappedBuffer()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuExternalMemoryGetMappedBuffer():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuExternalMemoryGetMappedBuffer(
+		CUresult retval = original_cuExternalMemoryGetMappedBuffer(
 		devPtr, 
 		extMem, 
 		bufferDesc
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

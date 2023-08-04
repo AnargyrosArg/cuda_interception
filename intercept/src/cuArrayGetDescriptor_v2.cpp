@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuArrayGetDescriptor_v2(CUDA_ARRAY_DESCRIPTOR *pArrayDescriptor, CUarray hArray) {
-		fprintf(stderr, "cuArrayGetDescriptor_v2()\n");
+		fprintf(stderr, "===============\ncuArrayGetDescriptor_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuArrayGetDescriptor_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuArrayGetDescriptor_v2(
+		CUresult retval = original_cuArrayGetDescriptor_v2(
 		pArrayDescriptor, 
 		hArray
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamGetCtx(CUstream hStream, CUcontext *pctx) {
-		fprintf(stderr, "cuStreamGetCtx()\n");
+		fprintf(stderr, "===============\ncuStreamGetCtx()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamGetCtx():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamGetCtx(
+		CUresult retval = original_cuStreamGetCtx(
 		hStream, 
 		pctx
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

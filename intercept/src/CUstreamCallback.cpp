@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	// void CUstreamCallback(CUstream hStream, CUresult status, void *userData) {
-		fprintf(stderr, "CUstreamCallback()\n");
+		fprintf(stderr, "===============\nCUstreamCallback()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,11 +34,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function CUstreamCallback():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_CUstreamCallback(
+		CUresult retval = original_CUstreamCallback(
 		hStream, 
 		status, 
 		userData
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }
 */

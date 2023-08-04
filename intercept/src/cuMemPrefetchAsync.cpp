@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemPrefetchAsync(CUdeviceptr devPtr, size_t count, CUdevice dstDevice, CUstream hStream) {
-		fprintf(stderr, "cuMemPrefetchAsync()\n");
+		fprintf(stderr, "===============\ncuMemPrefetchAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemPrefetchAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemPrefetchAsync(
+		CUresult retval = original_cuMemPrefetchAsync(
 		devPtr, 
 		count, 
 		dstDevice, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

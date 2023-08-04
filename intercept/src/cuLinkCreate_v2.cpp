@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuLinkCreate_v2(unsigned int numOptions, CUjit_option *options, void **optionValues, CUlinkState *stateOut) {
-		fprintf(stderr, "cuLinkCreate_v2()\n");
+		fprintf(stderr, "===============\ncuLinkCreate_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuLinkCreate_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuLinkCreate_v2(
+		CUresult retval = original_cuLinkCreate_v2(
 		numOptions, 
 		options, 
 		optionValues, 
 		stateOut
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

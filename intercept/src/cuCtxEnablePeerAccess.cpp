@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxEnablePeerAccess(CUcontext peerContext, unsigned int Flags) {
-		fprintf(stderr, "cuCtxEnablePeerAccess()\n");
+		fprintf(stderr, "===============\ncuCtxEnablePeerAccess()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxEnablePeerAccess():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxEnablePeerAccess(
+		CUresult retval = original_cuCtxEnablePeerAccess(
 		peerContext, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

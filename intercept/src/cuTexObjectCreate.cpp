@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexObjectCreate(CUtexObject *pTexObject, const CUDA_RESOURCE_DESC *pResDesc, const CUDA_TEXTURE_DESC *pTexDesc, const CUDA_RESOURCE_VIEW_DESC *pResViewDesc) {
-		fprintf(stderr, "cuTexObjectCreate()\n");
+		fprintf(stderr, "===============\ncuTexObjectCreate()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexObjectCreate():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexObjectCreate(
+		CUresult retval = original_cuTexObjectCreate(
 		pTexObject, 
 		pResDesc, 
 		pTexDesc, 
 		pResViewDesc
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

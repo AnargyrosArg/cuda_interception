@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphExecMemcpyNodeSetParams(CUgraphExec hGraphExec, CUgraphNode hNode, const CUDA_MEMCPY3D *copyParams, CUcontext ctx) {
-		fprintf(stderr, "cuGraphExecMemcpyNodeSetParams()\n");
+		fprintf(stderr, "===============\ncuGraphExecMemcpyNodeSetParams()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphExecMemcpyNodeSetParams():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphExecMemcpyNodeSetParams(
+		CUresult retval = original_cuGraphExecMemcpyNodeSetParams(
 		hGraphExec, 
 		hNode, 
 		copyParams, 
 		ctx
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceComputeCapability(int *major, int *minor, CUdevice dev) {
-		fprintf(stderr, "cuDeviceComputeCapability()\n");
+		fprintf(stderr, "===============\ncuDeviceComputeCapability()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceComputeCapability():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceComputeCapability(
+		CUresult retval = original_cuDeviceComputeCapability(
 		major, 
 		minor, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

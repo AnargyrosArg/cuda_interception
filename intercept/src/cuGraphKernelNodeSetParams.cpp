@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphKernelNodeSetParams(CUgraphNode hNode, const CUDA_KERNEL_NODE_PARAMS *nodeParams) {
-		fprintf(stderr, "cuGraphKernelNodeSetParams()\n");
+		fprintf(stderr, "===============\ncuGraphKernelNodeSetParams()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphKernelNodeSetParams():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphKernelNodeSetParams(
+		CUresult retval = original_cuGraphKernelNodeSetParams(
 		hNode, 
 		nodeParams
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

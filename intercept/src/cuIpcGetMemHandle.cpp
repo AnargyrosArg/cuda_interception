@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuIpcGetMemHandle(CUipcMemHandle *pHandle, CUdeviceptr dptr) {
-		fprintf(stderr, "cuIpcGetMemHandle()\n");
+		fprintf(stderr, "===============\ncuIpcGetMemHandle()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuIpcGetMemHandle():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuIpcGetMemHandle(
+		CUresult retval = original_cuIpcGetMemHandle(
 		pHandle, 
 		dptr
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

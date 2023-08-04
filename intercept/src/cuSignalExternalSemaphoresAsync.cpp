@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuSignalExternalSemaphoresAsync(const CUexternalSemaphore *extSemArray, const CUDA_EXTERNAL_SEMAPHORE_SIGNAL_PARAMS *paramsArray, unsigned int numExtSems, CUstream stream) {
-		fprintf(stderr, "cuSignalExternalSemaphoresAsync()\n");
+		fprintf(stderr, "===============\ncuSignalExternalSemaphoresAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuSignalExternalSemaphoresAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuSignalExternalSemaphoresAsync(
+		CUresult retval = original_cuSignalExternalSemaphoresAsync(
 		extSemArray, 
 		paramsArray, 
 		numExtSems, 
 		stream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

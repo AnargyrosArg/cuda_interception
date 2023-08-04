@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemHostGetFlags(unsigned int *pFlags, void *p) {
-		fprintf(stderr, "cuMemHostGetFlags()\n");
+		fprintf(stderr, "===============\ncuMemHostGetFlags()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemHostGetFlags():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemHostGetFlags(
+		CUresult retval = original_cuMemHostGetFlags(
 		pFlags, 
 		p
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

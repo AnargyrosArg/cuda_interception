@@ -6,10 +6,11 @@ CUmodule
 );
 //handle to the actual libcuda library, used to fetch original functions with dlsym
 extern void* original_libcuda_handle;
+extern int CALL_COUNTERS[];
 extern "C"
 {
 	CUresult cuModuleUnload(CUmodule hmod) {
-		fprintf(stderr, "cuModuleUnload()\n");
+		fprintf(stderr, "===============\ncuModuleUnload()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +31,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuModuleUnload():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuModuleUnload(
+		CUresult retval = original_cuModuleUnload(
 		hmod
 		);
+		fprintf(stderr, "===============\n");
+		for(int i=0;i<6;i++){
+			fprintf(stderr,"func:%d:%d\n",i,CALL_COUNTERS[i]);
+		}
+		return retval;
 	}
 }

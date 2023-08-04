@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuArrayGetPlane(CUarray *pPlaneArray, CUarray hArray, unsigned int planeIdx) {
-		fprintf(stderr, "cuArrayGetPlane()\n");
+		fprintf(stderr, "===============\ncuArrayGetPlane()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuArrayGetPlane():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuArrayGetPlane(
+		CUresult retval = original_cuArrayGetPlane(
 		pPlaneArray, 
 		hArray, 
 		planeIdx
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetLuid(char *luid, unsigned int *deviceNodeMask, CUdevice dev) {
-		fprintf(stderr, "cuDeviceGetLuid()\n");
+		fprintf(stderr, "===============\ncuDeviceGetLuid()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetLuid():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetLuid(
+		CUresult retval = original_cuDeviceGetLuid(
 		luid, 
 		deviceNodeMask, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

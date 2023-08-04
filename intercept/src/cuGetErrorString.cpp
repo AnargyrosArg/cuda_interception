@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGetErrorString(CUresult error, const char **pStr) {
-		fprintf(stderr, "cuGetErrorString()\n");
+		fprintf(stderr, "===============\ncuGetErrorString()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGetErrorString():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGetErrorString(
+		CUresult retval = original_cuGetErrorString(
 		error, 
 		pStr
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

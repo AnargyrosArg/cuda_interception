@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuUserObjectCreate(CUuserObject *object_out, void *ptr, CUhostFn destroy, unsigned int initialRefcount, unsigned int flags) {
-		fprintf(stderr, "cuUserObjectCreate()\n");
+		fprintf(stderr, "===============\ncuUserObjectCreate()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuUserObjectCreate():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuUserObjectCreate(
+		CUresult retval = original_cuUserObjectCreate(
 		object_out, 
 		ptr, 
 		destroy, 
 		initialRefcount, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

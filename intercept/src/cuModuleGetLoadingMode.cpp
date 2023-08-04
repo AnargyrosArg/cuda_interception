@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuModuleGetLoadingMode(CUmoduleLoadingMode *mode) {
-		fprintf(stderr, "cuModuleGetLoadingMode()\n");
+		fprintf(stderr, "===============\ncuModuleGetLoadingMode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuModuleGetLoadingMode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuModuleGetLoadingMode(
+		CUresult retval = original_cuModuleGetLoadingMode(
 		mode
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

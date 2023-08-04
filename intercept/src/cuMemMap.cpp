@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemMap(CUdeviceptr ptr, size_t size, size_t offset, CUmemGenericAllocationHandle handle, unsigned long long flags) {
-		fprintf(stderr, "cuMemMap()\n");
+		fprintf(stderr, "===============\ncuMemMap()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemMap():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemMap(
+		CUresult retval = original_cuMemMap(
 		ptr, 
 		size, 
 		offset, 
 		handle, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

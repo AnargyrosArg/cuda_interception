@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemCreate(CUmemGenericAllocationHandle *handle, size_t size, const CUmemAllocationProp *prop, unsigned long long flags) {
-		fprintf(stderr, "cuMemCreate()\n");
+		fprintf(stderr, "===============\ncuMemCreate()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemCreate():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemCreate(
+		CUresult retval = original_cuMemCreate(
 		handle, 
 		size, 
 		prop, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

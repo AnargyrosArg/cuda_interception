@@ -7,4 +7,4 @@ clean:
 	rm -rf a.out *.txt
 
 run:
-	LD_PRELOAD=../../intercept/libintercept.so ./a.out
+	LD_PRELOAD=../../intercept/libintercept.so ./a.out 2> log.txt

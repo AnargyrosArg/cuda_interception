@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuEventRecordWithFlags(CUevent hEvent, CUstream hStream, unsigned int flags) {
-		fprintf(stderr, "cuEventRecordWithFlags()\n");
+		fprintf(stderr, "===============\ncuEventRecordWithFlags()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuEventRecordWithFlags():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuEventRecordWithFlags(
+		CUresult retval = original_cuEventRecordWithFlags(
 		hEvent, 
 		hStream, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

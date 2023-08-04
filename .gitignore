@@ -75,3 +75,13 @@ mnistcpp.txt
 examples/imagenet/extract_ILSVRC.sh
 log2.txt
 log1.txt
+mobilenet_v2.txt
+mobilenet_v2_cudnn.txt
+resnet50.txt
+function_notes.txt
+log_original.txt
+mobilenetv_v2.txt
+log2_original.txt
+log.txt
+mnist.txt
+export tables.txt

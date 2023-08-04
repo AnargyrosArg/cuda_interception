@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemAdvise(CUdeviceptr devPtr, size_t count, CUmem_advise advice, CUdevice device) {
-		fprintf(stderr, "cuMemAdvise()\n");
+		fprintf(stderr, "===============\ncuMemAdvise()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemAdvise():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemAdvise(
+		CUresult retval = original_cuMemAdvise(
 		devPtr, 
 		count, 
 		advice, 
 		device
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

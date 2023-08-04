@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuOccupancyMaxActiveBlocksPerMultiprocessor(int *numBlocks, CUfunction func, int blockSize, size_t dynamicSMemSize) {
-		fprintf(stderr, "cuOccupancyMaxActiveBlocksPerMultiprocessor()\n");
+		fprintf(stderr, "===============\ncuOccupancyMaxActiveBlocksPerMultiprocessor()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuOccupancyMaxActiveBlocksPerMultiprocessor():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuOccupancyMaxActiveBlocksPerMultiprocessor(
+		CUresult retval = original_cuOccupancyMaxActiveBlocksPerMultiprocessor(
 		numBlocks, 
 		func, 
 		blockSize, 
 		dynamicSMemSize
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

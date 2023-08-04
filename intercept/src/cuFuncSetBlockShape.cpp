@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuFuncSetBlockShape(CUfunction hfunc, int x, int y, int z) {
-		fprintf(stderr, "cuFuncSetBlockShape()\n");
+		fprintf(stderr, "===============\ncuFuncSetBlockShape()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuFuncSetBlockShape():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuFuncSetBlockShape(
+		CUresult retval = original_cuFuncSetBlockShape(
 		hfunc, 
 		x, 
 		y, 
 		z
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

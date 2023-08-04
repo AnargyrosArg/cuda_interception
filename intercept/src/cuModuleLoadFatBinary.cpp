@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuModuleLoadFatBinary(CUmodule *module, const void *fatCubin) {
-		fprintf(stderr, "cuModuleLoadFatBinary()\n");
+		fprintf(stderr, "===============\ncuModuleLoadFatBinary()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuModuleLoadFatBinary():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuModuleLoadFatBinary(
+		CUresult retval = original_cuModuleLoadFatBinary(
 		module, 
 		fatCubin
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

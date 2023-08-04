@@ -14,7 +14,6 @@ parser.add_argument('--output_filename', type=str, help='where to save the outpu
 parser.add_argument('--cuda', action='store_true', help='use cuda')
 opt = parser.parse_args()
 
-torch.backends.cudnn.enabled = False
 print(opt)
 img = Image.open(opt.input_image).convert('YCbCr')
 y, cb, cr = img.split()

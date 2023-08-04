@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetTexture1DLinearMaxWidth(size_t *maxWidthInElements, CUarray_format format, unsigned numChannels, CUdevice dev) {
-		fprintf(stderr, "cuDeviceGetTexture1DLinearMaxWidth()\n");
+		fprintf(stderr, "===============\ncuDeviceGetTexture1DLinearMaxWidth()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetTexture1DLinearMaxWidth():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetTexture1DLinearMaxWidth(
+		CUresult retval = original_cuDeviceGetTexture1DLinearMaxWidth(
 		maxWidthInElements, 
 		format, 
 		numChannels, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

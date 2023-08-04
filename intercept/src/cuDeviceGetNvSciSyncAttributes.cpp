@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetNvSciSyncAttributes(void *nvSciSyncAttrList, CUdevice dev, int flags) {
-		fprintf(stderr, "cuDeviceGetNvSciSyncAttributes()\n");
+		fprintf(stderr, "===============\ncuDeviceGetNvSciSyncAttributes()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetNvSciSyncAttributes():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetNvSciSyncAttributes(
+		CUresult retval = original_cuDeviceGetNvSciSyncAttributes(
 		nvSciSyncAttrList, 
 		dev, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

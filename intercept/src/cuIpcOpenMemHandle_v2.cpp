@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuIpcOpenMemHandle_v2(CUdeviceptr *pdptr, CUipcMemHandle handle, unsigned int Flags) {
-		fprintf(stderr, "cuIpcOpenMemHandle_v2()\n");
+		fprintf(stderr, "===============\ncuIpcOpenMemHandle_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuIpcOpenMemHandle_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuIpcOpenMemHandle_v2(
+		CUresult retval = original_cuIpcOpenMemHandle_v2(
 		pdptr, 
 		handle, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

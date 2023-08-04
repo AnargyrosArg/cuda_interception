@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphExecExternalSemaphoresSignalNodeSetParams(CUgraphExec hGraphExec, CUgraphNode hNode, const CUDA_EXT_SEM_SIGNAL_NODE_PARAMS *nodeParams) {
-		fprintf(stderr, "cuGraphExecExternalSemaphoresSignalNodeSetParams()\n");
+		fprintf(stderr, "===============\ncuGraphExecExternalSemaphoresSignalNodeSetParams()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphExecExternalSemaphoresSignalNodeSetParams():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphExecExternalSemaphoresSignalNodeSetParams(
+		CUresult retval = original_cuGraphExecExternalSemaphoresSignalNodeSetParams(
 		hGraphExec, 
 		hNode, 
 		nodeParams
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

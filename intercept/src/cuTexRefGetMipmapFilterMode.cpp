@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefGetMipmapFilterMode(CUfilter_mode *pfm, CUtexref hTexRef) {
-		fprintf(stderr, "cuTexRefGetMipmapFilterMode()\n");
+		fprintf(stderr, "===============\ncuTexRefGetMipmapFilterMode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefGetMipmapFilterMode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefGetMipmapFilterMode(
+		CUresult retval = original_cuTexRefGetMipmapFilterMode(
 		pfm, 
 		hTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

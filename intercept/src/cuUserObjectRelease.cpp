@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuUserObjectRelease(CUuserObject object, unsigned int count) {
-		fprintf(stderr, "cuUserObjectRelease()\n");
+		fprintf(stderr, "===============\ncuUserObjectRelease()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuUserObjectRelease():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuUserObjectRelease(
+		CUresult retval = original_cuUserObjectRelease(
 		object, 
 		count
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphGetNodes(CUgraph hGraph, CUgraphNode *nodes, size_t *numNodes) {
-		fprintf(stderr, "cuGraphGetNodes()\n");
+		fprintf(stderr, "===============\ncuGraphGetNodes()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphGetNodes():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphGetNodes(
+		CUresult retval = original_cuGraphGetNodes(
 		hGraph, 
 		nodes, 
 		numNodes
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

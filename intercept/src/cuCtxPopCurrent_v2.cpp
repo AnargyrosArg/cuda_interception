@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxPopCurrent_v2(CUcontext *pctx) {
-		fprintf(stderr, "cuCtxPopCurrent_v2()\n");
+		fprintf(stderr, "===============\ncuCtxPopCurrent_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxPopCurrent_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxPopCurrent_v2(
+		CUresult retval = original_cuCtxPopCurrent_v2(
 		pctx
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

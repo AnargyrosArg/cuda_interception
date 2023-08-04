@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuLinkDestroy(CUlinkState state) {
-		fprintf(stderr, "cuLinkDestroy()\n");
+		fprintf(stderr, "===============\ncuLinkDestroy()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuLinkDestroy():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuLinkDestroy(
+		CUresult retval = original_cuLinkDestroy(
 		state
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

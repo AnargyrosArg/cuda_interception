@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefGetBorderColor(float *pBorderColor, CUtexref hTexRef) {
-		fprintf(stderr, "cuTexRefGetBorderColor()\n");
+		fprintf(stderr, "===============\ncuTexRefGetBorderColor()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefGetBorderColor():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefGetBorderColor(
+		CUresult retval = original_cuTexRefGetBorderColor(
 		pBorderColor, 
 		hTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

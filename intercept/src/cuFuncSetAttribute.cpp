@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuFuncSetAttribute(CUfunction hfunc, CUfunction_attribute attrib, int value) {
-		fprintf(stderr, "cuFuncSetAttribute()\n");
+		fprintf(stderr, "===============\ncuFuncSetAttribute()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuFuncSetAttribute():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuFuncSetAttribute(
+		CUresult retval = original_cuFuncSetAttribute(
 		hfunc, 
 		attrib, 
 		value
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

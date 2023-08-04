@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemHostRegister_v2(void *p, size_t bytesize, unsigned int Flags) {
-		fprintf(stderr, "cuMemHostRegister_v2()\n");
+		fprintf(stderr, "===============\ncuMemHostRegister_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemHostRegister_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemHostRegister_v2(
+		CUresult retval = original_cuMemHostRegister_v2(
 		p, 
 		bytesize, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

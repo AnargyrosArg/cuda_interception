@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuUserObjectRetain(CUuserObject object, unsigned int count) {
-		fprintf(stderr, "cuUserObjectRetain()\n");
+		fprintf(stderr, "===============\ncuUserObjectRetain()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuUserObjectRetain():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuUserObjectRetain(
+		CUresult retval = original_cuUserObjectRetain(
 		object, 
 		count
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

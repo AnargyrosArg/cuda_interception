@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuParamSeti(CUfunction hfunc, int offset, unsigned int value) {
-		fprintf(stderr, "cuParamSeti()\n");
+		fprintf(stderr, "===============\ncuParamSeti()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuParamSeti():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuParamSeti(
+		CUresult retval = original_cuParamSeti(
 		hfunc, 
 		offset, 
 		value
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

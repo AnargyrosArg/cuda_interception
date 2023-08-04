@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphKernelNodeSetAttribute(CUgraphNode hNode, CUkernelNodeAttrID attr, const CUkernelNodeAttrValue *value) {
-		fprintf(stderr, "cuGraphKernelNodeSetAttribute()\n");
+		fprintf(stderr, "===============\ncuGraphKernelNodeSetAttribute()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphKernelNodeSetAttribute():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphKernelNodeSetAttribute(
+		CUresult retval = original_cuGraphKernelNodeSetAttribute(
 		hNode, 
 		attr, 
 		value
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

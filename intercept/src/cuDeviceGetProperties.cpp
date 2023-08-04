@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetProperties(CUdevprop *prop, CUdevice dev) {
-		fprintf(stderr, "cuDeviceGetProperties()\n");
+		fprintf(stderr, "===============\ncuDeviceGetProperties()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetProperties():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetProperties(
+		CUresult retval = original_cuDeviceGetProperties(
 		prop, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

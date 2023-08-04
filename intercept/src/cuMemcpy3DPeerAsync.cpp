@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemcpy3DPeerAsync(const CUDA_MEMCPY3D_PEER *pCopy, CUstream hStream) {
-		fprintf(stderr, "cuMemcpy3DPeerAsync()\n");
+		fprintf(stderr, "===============\ncuMemcpy3DPeerAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemcpy3DPeerAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemcpy3DPeerAsync(
+		CUresult retval = original_cuMemcpy3DPeerAsync(
 		pCopy, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

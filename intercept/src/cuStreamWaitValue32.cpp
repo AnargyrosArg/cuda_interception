@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamWaitValue32(CUstream stream, CUdeviceptr addr, cuuint32_t value, unsigned int flags) {
-		fprintf(stderr, "cuStreamWaitValue32()\n");
+		fprintf(stderr, "===============\ncuStreamWaitValue32()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamWaitValue32():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamWaitValue32(
+		CUresult retval = original_cuStreamWaitValue32(
 		stream, 
 		addr, 
 		value, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

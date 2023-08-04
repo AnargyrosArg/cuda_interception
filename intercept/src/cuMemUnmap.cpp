@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemUnmap(CUdeviceptr ptr, size_t size) {
-		fprintf(stderr, "cuMemUnmap()\n");
+		fprintf(stderr, "===============\ncuMemUnmap()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemUnmap():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemUnmap(
+		CUresult retval = original_cuMemUnmap(
 		ptr, 
 		size
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

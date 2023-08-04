@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuImportExternalMemory(CUexternalMemory *extMem_out, const CUDA_EXTERNAL_MEMORY_HANDLE_DESC *memHandleDesc) {
-		fprintf(stderr, "cuImportExternalMemory()\n");
+		fprintf(stderr, "===============\ncuImportExternalMemory()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuImportExternalMemory():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuImportExternalMemory(
+		CUresult retval = original_cuImportExternalMemory(
 		extMem_out, 
 		memHandleDesc
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

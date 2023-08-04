@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphAddMemFreeNode(CUgraphNode *phGraphNode, CUgraph hGraph, const CUgraphNode *dependencies, size_t numDependencies, CUdeviceptr dptr) {
-		fprintf(stderr, "cuGraphAddMemFreeNode()\n");
+		fprintf(stderr, "===============\ncuGraphAddMemFreeNode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphAddMemFreeNode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphAddMemFreeNode(
+		CUresult retval = original_cuGraphAddMemFreeNode(
 		phGraphNode, 
 		hGraph, 
 		dependencies, 
 		numDependencies, 
 		dptr
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

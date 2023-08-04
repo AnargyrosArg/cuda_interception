@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemGetAllocationGranularity(size_t *granularity, const CUmemAllocationProp *prop, CUmemAllocationGranularity_flags option) {
-		fprintf(stderr, "cuMemGetAllocationGranularity()\n");
+		fprintf(stderr, "===============\ncuMemGetAllocationGranularity()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemGetAllocationGranularity():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemGetAllocationGranularity(
+		CUresult retval = original_cuMemGetAllocationGranularity(
 		granularity, 
 		prop, 
 		option
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

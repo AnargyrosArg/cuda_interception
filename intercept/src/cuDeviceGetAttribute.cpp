@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetAttribute(int *pi, CUdevice_attribute attrib, CUdevice dev) {
-		fprintf(stderr, "cuDeviceGetAttribute()\n");
+		fprintf(stderr, "===============\ncuDeviceGetAttribute()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetAttribute():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetAttribute(
+		CUresult retval = original_cuDeviceGetAttribute(
 		pi, 
 		attrib, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

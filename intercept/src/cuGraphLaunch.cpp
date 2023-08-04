@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphLaunch(CUgraphExec hGraphExec, CUstream hStream) {
-		fprintf(stderr, "cuGraphLaunch()\n");
+		fprintf(stderr, "===============\ncuGraphLaunch()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphLaunch():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphLaunch(
+		CUresult retval = original_cuGraphLaunch(
 		hGraphExec, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

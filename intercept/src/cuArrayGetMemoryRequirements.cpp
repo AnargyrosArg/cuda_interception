@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuArrayGetMemoryRequirements(CUDA_ARRAY_MEMORY_REQUIREMENTS *memoryRequirements, CUarray array, CUdevice device) {
-		fprintf(stderr, "cuArrayGetMemoryRequirements()\n");
+		fprintf(stderr, "===============\ncuArrayGetMemoryRequirements()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuArrayGetMemoryRequirements():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuArrayGetMemoryRequirements(
+		CUresult retval = original_cuArrayGetMemoryRequirements(
 		memoryRequirements, 
 		array, 
 		device
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

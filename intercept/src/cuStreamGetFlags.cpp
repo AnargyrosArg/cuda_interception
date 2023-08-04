@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamGetFlags(CUstream hStream, unsigned int *flags) {
-		fprintf(stderr, "cuStreamGetFlags()\n");
+		fprintf(stderr, "===============\ncuStreamGetFlags()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamGetFlags():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamGetFlags(
+		CUresult retval = original_cuStreamGetFlags(
 		hStream, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

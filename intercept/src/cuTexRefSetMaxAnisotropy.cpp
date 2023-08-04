@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefSetMaxAnisotropy(CUtexref hTexRef, unsigned int maxAniso) {
-		fprintf(stderr, "cuTexRefSetMaxAnisotropy()\n");
+		fprintf(stderr, "===============\ncuTexRefSetMaxAnisotropy()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefSetMaxAnisotropy():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefSetMaxAnisotropy(
+		CUresult retval = original_cuTexRefSetMaxAnisotropy(
 		hTexRef, 
 		maxAniso
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

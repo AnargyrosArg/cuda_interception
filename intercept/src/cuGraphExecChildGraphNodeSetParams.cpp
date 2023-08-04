@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphExecChildGraphNodeSetParams(CUgraphExec hGraphExec, CUgraphNode hNode, CUgraph childGraph) {
-		fprintf(stderr, "cuGraphExecChildGraphNodeSetParams()\n");
+		fprintf(stderr, "===============\ncuGraphExecChildGraphNodeSetParams()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphExecChildGraphNodeSetParams():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphExecChildGraphNodeSetParams(
+		CUresult retval = original_cuGraphExecChildGraphNodeSetParams(
 		hGraphExec, 
 		hNode, 
 		childGraph
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

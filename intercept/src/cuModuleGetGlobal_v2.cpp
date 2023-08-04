@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuModuleGetGlobal_v2(CUdeviceptr *dptr, size_t *bytes, CUmodule hmod, const char *name) {
-		fprintf(stderr, "cuModuleGetGlobal_v2()\n");
+		fprintf(stderr, "===============\ncuModuleGetGlobal_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuModuleGetGlobal_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuModuleGetGlobal_v2(
+		CUresult retval = original_cuModuleGetGlobal_v2(
 		dptr, 
 		bytes, 
 		hmod, 
 		name
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

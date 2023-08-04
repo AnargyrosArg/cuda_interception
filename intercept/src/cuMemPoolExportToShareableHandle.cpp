@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemPoolExportToShareableHandle(void *handle_out, CUmemoryPool pool, CUmemAllocationHandleType handleType, unsigned long long flags) {
-		fprintf(stderr, "cuMemPoolExportToShareableHandle()\n");
+		fprintf(stderr, "===============\ncuMemPoolExportToShareableHandle()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemPoolExportToShareableHandle():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemPoolExportToShareableHandle(
+		CUresult retval = original_cuMemPoolExportToShareableHandle(
 		handle_out, 
 		pool, 
 		handleType, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

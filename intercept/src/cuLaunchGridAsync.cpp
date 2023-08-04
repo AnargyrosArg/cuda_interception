@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuLaunchGridAsync(CUfunction f, int grid_width, int grid_height, CUstream hStream) {
-		fprintf(stderr, "cuLaunchGridAsync()\n");
+		fprintf(stderr, "===============\ncuLaunchGridAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuLaunchGridAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuLaunchGridAsync(
+		CUresult retval = original_cuLaunchGridAsync(
 		f, 
 		grid_width, 
 		grid_height, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

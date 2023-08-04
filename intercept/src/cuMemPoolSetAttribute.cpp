@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemPoolSetAttribute(CUmemoryPool pool, CUmemPool_attribute attr, void *value) {
-		fprintf(stderr, "cuMemPoolSetAttribute()\n");
+		fprintf(stderr, "===============\ncuMemPoolSetAttribute()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemPoolSetAttribute():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemPoolSetAttribute(
+		CUresult retval = original_cuMemPoolSetAttribute(
 		pool, 
 		attr, 
 		value
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

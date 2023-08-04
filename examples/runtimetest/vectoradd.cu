@@ -93,6 +93,7 @@ main(void)
 
     if (err != cudaSuccess)
     {
+        fprintf(stderr, "%d\n",err);
         fprintf(stderr, "Failed to allocate device vector A (error code %s)!\n", cudaGetErrorString(err));
         exit(EXIT_FAILURE);
     }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphicsUnmapResources(unsigned int count, CUgraphicsResource *resources, CUstream hStream) {
-		fprintf(stderr, "cuGraphicsUnmapResources()\n");
+		fprintf(stderr, "===============\ncuGraphicsUnmapResources()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphicsUnmapResources():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphicsUnmapResources(
+		CUresult retval = original_cuGraphicsUnmapResources(
 		count, 
 		resources, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

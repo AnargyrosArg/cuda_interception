@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemsetD32_v2(CUdeviceptr dstDevice, unsigned int ui, size_t N) {
-		fprintf(stderr, "cuMemsetD32_v2()\n");
+		fprintf(stderr, "===============\ncuMemsetD32_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemsetD32_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemsetD32_v2(
+		CUresult retval = original_cuMemsetD32_v2(
 		dstDevice, 
 		ui, 
 		N
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

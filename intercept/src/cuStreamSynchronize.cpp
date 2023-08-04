@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamSynchronize(CUstream hStream) {
-		fprintf(stderr, "cuStreamSynchronize()\n");
+		fprintf(stderr, "===============\ncuStreamSynchronize()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamSynchronize():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamSynchronize(
+		CUresult retval = original_cuStreamSynchronize(
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

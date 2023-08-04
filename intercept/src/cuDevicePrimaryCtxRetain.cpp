@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDevicePrimaryCtxRetain(CUcontext *pctx, CUdevice dev) {
-		fprintf(stderr, "cuDevicePrimaryCtxRetain()\n");
+		fprintf(stderr, "===============\ncuDevicePrimaryCtxRetain()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDevicePrimaryCtxRetain():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDevicePrimaryCtxRetain(
+		CUresult retval = original_cuDevicePrimaryCtxRetain(
 		pctx, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

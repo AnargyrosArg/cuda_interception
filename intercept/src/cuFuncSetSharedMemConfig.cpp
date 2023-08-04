@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuFuncSetSharedMemConfig(CUfunction hfunc, CUsharedconfig config) {
-		fprintf(stderr, "cuFuncSetSharedMemConfig()\n");
+		fprintf(stderr, "===============\ncuFuncSetSharedMemConfig()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuFuncSetSharedMemConfig():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuFuncSetSharedMemConfig(
+		CUresult retval = original_cuFuncSetSharedMemConfig(
 		hfunc, 
 		config
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

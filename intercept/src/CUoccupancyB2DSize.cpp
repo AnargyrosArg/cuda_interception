@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	// size_t CUoccupancyB2DSize(int blockSize) {
-		fprintf(stderr, "CUoccupancyB2DSize()\n");
+		fprintf(stderr, "===============\nCUoccupancyB2DSize()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,9 +30,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function CUoccupancyB2DSize():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_CUoccupancyB2DSize(
+		CUresult retval = original_CUoccupancyB2DSize(
 		blockSize
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }
 */

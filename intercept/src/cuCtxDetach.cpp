@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxDetach(CUcontext ctx) {
-		fprintf(stderr, "cuCtxDetach()\n");
+		fprintf(stderr, "===============\ncuCtxDetach()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxDetach():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxDetach(
+		CUresult retval = original_cuCtxDetach(
 		ctx
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

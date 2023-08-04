@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxGetCurrent(CUcontext *pctx) {
-		fprintf(stderr, "cuCtxGetCurrent()\n");
+		fprintf(stderr, "===============\ncuCtxGetCurrent()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxGetCurrent():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxGetCurrent(
+		CUresult retval = original_cuCtxGetCurrent(
 		pctx
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

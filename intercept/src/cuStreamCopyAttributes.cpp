@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamCopyAttributes(CUstream dst, CUstream src) {
-		fprintf(stderr, "cuStreamCopyAttributes()\n");
+		fprintf(stderr, "===============\ncuStreamCopyAttributes()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamCopyAttributes():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamCopyAttributes(
+		CUresult retval = original_cuStreamCopyAttributes(
 		dst, 
 		src
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

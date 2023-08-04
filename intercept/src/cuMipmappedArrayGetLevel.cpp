@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMipmappedArrayGetLevel(CUarray *pLevelArray, CUmipmappedArray hMipmappedArray, unsigned int level) {
-		fprintf(stderr, "cuMipmappedArrayGetLevel()\n");
+		fprintf(stderr, "===============\ncuMipmappedArrayGetLevel()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMipmappedArrayGetLevel():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMipmappedArrayGetLevel(
+		CUresult retval = original_cuMipmappedArrayGetLevel(
 		pLevelArray, 
 		hMipmappedArray, 
 		level
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

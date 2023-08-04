@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuSurfObjectCreate(CUsurfObject *pSurfObject, const CUDA_RESOURCE_DESC *pResDesc) {
-		fprintf(stderr, "cuSurfObjectCreate()\n");
+		fprintf(stderr, "===============\ncuSurfObjectCreate()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuSurfObjectCreate():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuSurfObjectCreate(
+		CUresult retval = original_cuSurfObjectCreate(
 		pSurfObject, 
 		pResDesc
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

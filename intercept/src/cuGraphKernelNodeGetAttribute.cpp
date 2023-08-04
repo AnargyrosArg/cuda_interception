@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphKernelNodeGetAttribute(CUgraphNode hNode, CUkernelNodeAttrID attr, CUkernelNodeAttrValue *value_out) {
-		fprintf(stderr, "cuGraphKernelNodeGetAttribute()\n");
+		fprintf(stderr, "===============\ncuGraphKernelNodeGetAttribute()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphKernelNodeGetAttribute():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphKernelNodeGetAttribute(
+		CUresult retval = original_cuGraphKernelNodeGetAttribute(
 		hNode, 
 		attr, 
 		value_out
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

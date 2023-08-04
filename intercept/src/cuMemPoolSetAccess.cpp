@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemPoolSetAccess(CUmemoryPool pool, const CUmemAccessDesc *map, size_t count) {
-		fprintf(stderr, "cuMemPoolSetAccess()\n");
+		fprintf(stderr, "===============\ncuMemPoolSetAccess()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemPoolSetAccess():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemPoolSetAccess(
+		CUresult retval = original_cuMemPoolSetAccess(
 		pool, 
 		map, 
 		count
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

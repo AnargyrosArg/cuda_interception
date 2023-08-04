@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphAddKernelNode(CUgraphNode *phGraphNode, CUgraph hGraph, const CUgraphNode *dependencies, size_t numDependencies, const CUDA_KERNEL_NODE_PARAMS *nodeParams) {
-		fprintf(stderr, "cuGraphAddKernelNode()\n");
+		fprintf(stderr, "===============\ncuGraphAddKernelNode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphAddKernelNode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphAddKernelNode(
+		CUresult retval = original_cuGraphAddKernelNode(
 		phGraphNode, 
 		hGraph, 
 		dependencies, 
 		numDependencies, 
 		nodeParams
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemAllocFromPoolAsync(CUdeviceptr *dptr, size_t bytesize, CUmemoryPool pool, CUstream hStream) {
-		fprintf(stderr, "cuMemAllocFromPoolAsync()\n");
+		fprintf(stderr, "===============\ncuMemAllocFromPoolAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemAllocFromPoolAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemAllocFromPoolAsync(
+		CUresult retval = original_cuMemAllocFromPoolAsync(
 		dptr, 
 		bytesize, 
 		pool, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

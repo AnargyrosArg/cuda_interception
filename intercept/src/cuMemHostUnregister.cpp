@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemHostUnregister(void *p) {
-		fprintf(stderr, "cuMemHostUnregister()\n");
+		fprintf(stderr, "===============\ncuMemHostUnregister()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemHostUnregister():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemHostUnregister(
+		CUresult retval = original_cuMemHostUnregister(
 		p
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

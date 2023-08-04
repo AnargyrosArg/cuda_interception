@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetByPCIBusId(CUdevice *dev, const char *pciBusId) {
-		fprintf(stderr, "cuDeviceGetByPCIBusId()\n");
+		fprintf(stderr, "===============\ncuDeviceGetByPCIBusId()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetByPCIBusId():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetByPCIBusId(
+		CUresult retval = original_cuDeviceGetByPCIBusId(
 		dev, 
 		pciBusId
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

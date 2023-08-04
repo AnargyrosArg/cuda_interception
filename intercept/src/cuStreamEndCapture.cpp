@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamEndCapture(CUstream hStream, CUgraph *phGraph) {
-		fprintf(stderr, "cuStreamEndCapture()\n");
+		fprintf(stderr, "===============\ncuStreamEndCapture()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamEndCapture():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamEndCapture(
+		CUresult retval = original_cuStreamEndCapture(
 		hStream, 
 		phGraph
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

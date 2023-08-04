@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemFreeHost(void *p) {
-		fprintf(stderr, "cuMemFreeHost()\n");
+		fprintf(stderr, "===============\ncuMemFreeHost()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemFreeHost():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemFreeHost(
+		CUresult retval = original_cuMemFreeHost(
 		p
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

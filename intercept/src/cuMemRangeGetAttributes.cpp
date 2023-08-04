@@ -14,7 +14,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemRangeGetAttributes(void **data, size_t *dataSizes, CUmem_range_attribute *attributes, size_t numAttributes, CUdeviceptr devPtr, size_t count) {
-		fprintf(stderr, "cuMemRangeGetAttributes()\n");
+		fprintf(stderr, "===============\ncuMemRangeGetAttributes()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -40,7 +40,7 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemRangeGetAttributes():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemRangeGetAttributes(
+		CUresult retval = original_cuMemRangeGetAttributes(
 		data, 
 		dataSizes, 
 		attributes, 
@@ -48,5 +48,7 @@ extern "C"
 		devPtr, 
 		count
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

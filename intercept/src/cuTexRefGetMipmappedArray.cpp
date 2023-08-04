@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefGetMipmappedArray(CUmipmappedArray *phMipmappedArray, CUtexref hTexRef) {
-		fprintf(stderr, "cuTexRefGetMipmappedArray()\n");
+		fprintf(stderr, "===============\ncuTexRefGetMipmappedArray()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefGetMipmappedArray():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefGetMipmappedArray(
+		CUresult retval = original_cuTexRefGetMipmappedArray(
 		phMipmappedArray, 
 		hTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

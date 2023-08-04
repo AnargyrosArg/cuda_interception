@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefDestroy(CUtexref hTexRef) {
-		fprintf(stderr, "cuTexRefDestroy()\n");
+		fprintf(stderr, "===============\ncuTexRefDestroy()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefDestroy():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefDestroy(
+		CUresult retval = original_cuTexRefDestroy(
 		hTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

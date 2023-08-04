@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxDestroy_v2(CUcontext ctx) {
-		fprintf(stderr, "cuCtxDestroy_v2()\n");
+		fprintf(stderr, "===============\ncuCtxDestroy_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxDestroy_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxDestroy_v2(
+		CUresult retval = original_cuCtxDestroy_v2(
 		ctx
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

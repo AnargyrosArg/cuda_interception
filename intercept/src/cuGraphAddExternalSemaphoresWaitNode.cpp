@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphAddExternalSemaphoresWaitNode(CUgraphNode *phGraphNode, CUgraph hGraph, const CUgraphNode *dependencies, size_t numDependencies, const CUDA_EXT_SEM_WAIT_NODE_PARAMS *nodeParams) {
-		fprintf(stderr, "cuGraphAddExternalSemaphoresWaitNode()\n");
+		fprintf(stderr, "===============\ncuGraphAddExternalSemaphoresWaitNode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphAddExternalSemaphoresWaitNode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphAddExternalSemaphoresWaitNode(
+		CUresult retval = original_cuGraphAddExternalSemaphoresWaitNode(
 		phGraphNode, 
 		hGraph, 
 		dependencies, 
 		numDependencies, 
 		nodeParams
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

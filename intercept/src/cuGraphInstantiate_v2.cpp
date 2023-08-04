@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphInstantiate_v2(CUgraphExec *phGraphExec, CUgraph hGraph, CUgraphNode *phErrorNode, char *logBuffer, size_t bufferSize) {
-		fprintf(stderr, "cuGraphInstantiate_v2()\n");
+		fprintf(stderr, "===============\ncuGraphInstantiate_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphInstantiate_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphInstantiate_v2(
+		CUresult retval = original_cuGraphInstantiate_v2(
 		phGraphExec, 
 		hGraph, 
 		phErrorNode, 
 		logBuffer, 
 		bufferSize
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuFlushGPUDirectRDMAWrites(CUflushGPUDirectRDMAWritesTarget target, CUflushGPUDirectRDMAWritesScope scope) {
-		fprintf(stderr, "cuFlushGPUDirectRDMAWrites()\n");
+		fprintf(stderr, "===============\ncuFlushGPUDirectRDMAWrites()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuFlushGPUDirectRDMAWrites():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuFlushGPUDirectRDMAWrites(
+		CUresult retval = original_cuFlushGPUDirectRDMAWrites(
 		target, 
 		scope
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

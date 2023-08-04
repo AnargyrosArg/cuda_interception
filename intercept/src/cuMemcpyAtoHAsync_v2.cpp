@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemcpyAtoHAsync_v2(void *dstHost, CUarray srcArray, size_t srcOffset, size_t ByteCount, CUstream hStream) {
-		fprintf(stderr, "cuMemcpyAtoHAsync_v2()\n");
+		fprintf(stderr, "===============\ncuMemcpyAtoHAsync_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemcpyAtoHAsync_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemcpyAtoHAsync_v2(
+		CUresult retval = original_cuMemcpyAtoHAsync_v2(
 		dstHost, 
 		srcArray, 
 		srcOffset, 
 		ByteCount, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

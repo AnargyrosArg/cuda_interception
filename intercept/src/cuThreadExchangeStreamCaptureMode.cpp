@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuThreadExchangeStreamCaptureMode(CUstreamCaptureMode *mode) {
-		fprintf(stderr, "cuThreadExchangeStreamCaptureMode()\n");
+		fprintf(stderr, "===============\ncuThreadExchangeStreamCaptureMode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuThreadExchangeStreamCaptureMode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuThreadExchangeStreamCaptureMode(
+		CUresult retval = original_cuThreadExchangeStreamCaptureMode(
 		mode
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

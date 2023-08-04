@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetP2PAttribute(int *value, CUdevice_P2PAttribute attrib, CUdevice srcDevice, CUdevice dstDevice) {
-		fprintf(stderr, "cuDeviceGetP2PAttribute()\n");
+		fprintf(stderr, "===============\ncuDeviceGetP2PAttribute()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetP2PAttribute():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetP2PAttribute(
+		CUresult retval = original_cuDeviceGetP2PAttribute(
 		value, 
 		attrib, 
 		srcDevice, 
 		dstDevice
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

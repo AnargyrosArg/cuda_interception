@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	// void CUhostFn(void *userData) {
-		fprintf(stderr, "CUhostFn()\n");
+		fprintf(stderr, "===============\nCUhostFn()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,9 +30,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function CUhostFn():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_CUhostFn(
+		CUresult retval = original_CUhostFn(
 		userData
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }
 */

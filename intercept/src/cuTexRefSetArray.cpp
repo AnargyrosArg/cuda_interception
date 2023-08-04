@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefSetArray(CUtexref hTexRef, CUarray hArray, unsigned int Flags) {
-		fprintf(stderr, "cuTexRefSetArray()\n");
+		fprintf(stderr, "===============\ncuTexRefSetArray()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefSetArray():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefSetArray(
+		CUresult retval = original_cuTexRefSetArray(
 		hTexRef, 
 		hArray, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

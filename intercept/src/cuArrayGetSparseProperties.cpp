@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuArrayGetSparseProperties(CUDA_ARRAY_SPARSE_PROPERTIES *sparseProperties, CUarray array) {
-		fprintf(stderr, "cuArrayGetSparseProperties()\n");
+		fprintf(stderr, "===============\ncuArrayGetSparseProperties()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuArrayGetSparseProperties():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuArrayGetSparseProperties(
+		CUresult retval = original_cuArrayGetSparseProperties(
 		sparseProperties, 
 		array
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamCreateWithPriority(CUstream *phStream, unsigned int flags, int priority) {
-		fprintf(stderr, "cuStreamCreateWithPriority()\n");
+		fprintf(stderr, "===============\ncuStreamCreateWithPriority()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamCreateWithPriority():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamCreateWithPriority(
+		CUresult retval = original_cuStreamCreateWithPriority(
 		phStream, 
 		flags, 
 		priority
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

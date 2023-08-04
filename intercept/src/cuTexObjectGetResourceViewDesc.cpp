@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexObjectGetResourceViewDesc(CUDA_RESOURCE_VIEW_DESC *pResViewDesc, CUtexObject texObject) {
-		fprintf(stderr, "cuTexObjectGetResourceViewDesc()\n");
+		fprintf(stderr, "===============\ncuTexObjectGetResourceViewDesc()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexObjectGetResourceViewDesc():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexObjectGetResourceViewDesc(
+		CUresult retval = original_cuTexObjectGetResourceViewDesc(
 		pResViewDesc, 
 		texObject
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

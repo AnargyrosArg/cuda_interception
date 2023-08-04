@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphMemsetNodeGetParams(CUgraphNode hNode, CUDA_MEMSET_NODE_PARAMS *nodeParams) {
-		fprintf(stderr, "cuGraphMemsetNodeGetParams()\n");
+		fprintf(stderr, "===============\ncuGraphMemsetNodeGetParams()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphMemsetNodeGetParams():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphMemsetNodeGetParams(
+		CUresult retval = original_cuGraphMemsetNodeGetParams(
 		hNode, 
 		nodeParams
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

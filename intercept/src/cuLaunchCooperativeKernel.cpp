@@ -18,7 +18,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuLaunchCooperativeKernel(CUfunction f, unsigned int gridDimX, unsigned int gridDimY, unsigned int gridDimZ, unsigned int blockDimX, unsigned int blockDimY, unsigned int blockDimZ, unsigned int sharedMemBytes, CUstream hStream, void **kernelParams) {
-		fprintf(stderr, "cuLaunchCooperativeKernel()\n");
+		fprintf(stderr, "===============\ncuLaunchCooperativeKernel()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -48,7 +48,7 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuLaunchCooperativeKernel():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuLaunchCooperativeKernel(
+		CUresult retval = original_cuLaunchCooperativeKernel(
 		f, 
 		gridDimX, 
 		gridDimY, 
@@ -60,5 +60,7 @@ extern "C"
 		hStream, 
 		kernelParams
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

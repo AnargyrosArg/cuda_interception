@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemHostAlloc(void **pp, size_t bytesize, unsigned int Flags) {
-		fprintf(stderr, "cuMemHostAlloc()\n");
+		fprintf(stderr, "===============\ncuMemHostAlloc()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemHostAlloc():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemHostAlloc(
+		CUresult retval = original_cuMemHostAlloc(
 		pp, 
 		bytesize, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

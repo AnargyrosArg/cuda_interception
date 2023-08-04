@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDriverGetVersion(int *driverVersion) {
-		fprintf(stderr, "cuDriverGetVersion()\n");
+		fprintf(stderr, "===============\ncuDriverGetVersion()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDriverGetVersion():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDriverGetVersion(
+		CUresult retval = original_cuDriverGetVersion(
 		driverVersion
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

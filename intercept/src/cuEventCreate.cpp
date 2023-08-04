@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuEventCreate(CUevent *phEvent, unsigned int Flags) {
-		fprintf(stderr, "cuEventCreate()\n");
+		fprintf(stderr, "===============\ncuEventCreate()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuEventCreate():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuEventCreate(
+		CUresult retval = original_cuEventCreate(
 		phEvent, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

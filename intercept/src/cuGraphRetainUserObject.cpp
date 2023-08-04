@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphRetainUserObject(CUgraph graph, CUuserObject object, unsigned int count, unsigned int flags) {
-		fprintf(stderr, "cuGraphRetainUserObject()\n");
+		fprintf(stderr, "===============\ncuGraphRetainUserObject()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphRetainUserObject():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphRetainUserObject(
+		CUresult retval = original_cuGraphRetainUserObject(
 		graph, 
 		object, 
 		count, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

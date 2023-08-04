@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemMapArrayAsync(CUarrayMapInfo *mapInfoList, unsigned int count, CUstream hStream) {
-		fprintf(stderr, "cuMemMapArrayAsync()\n");
+		fprintf(stderr, "===============\ncuMemMapArrayAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemMapArrayAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemMapArrayAsync(
+		CUresult retval = original_cuMemMapArrayAsync(
 		mapInfoList, 
 		count, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

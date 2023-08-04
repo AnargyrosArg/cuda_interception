@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamAttachMemAsync(CUstream hStream, CUdeviceptr dptr, size_t length, unsigned int flags) {
-		fprintf(stderr, "cuStreamAttachMemAsync()\n");
+		fprintf(stderr, "===============\ncuStreamAttachMemAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamAttachMemAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamAttachMemAsync(
+		CUresult retval = original_cuStreamAttachMemAsync(
 		hStream, 
 		dptr, 
 		length, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

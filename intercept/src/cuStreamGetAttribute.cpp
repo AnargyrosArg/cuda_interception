@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamGetAttribute(CUstream hStream, CUstreamAttrID attr, CUstreamAttrValue *value_out) {
-		fprintf(stderr, "cuStreamGetAttribute()\n");
+		fprintf(stderr, "===============\ncuStreamGetAttribute()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamGetAttribute():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamGetAttribute(
+		CUresult retval = original_cuStreamGetAttribute(
 		hStream, 
 		attr, 
 		value_out
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

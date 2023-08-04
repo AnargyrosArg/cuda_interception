@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemGetAccess(unsigned long long *flags, const CUmemLocation *location, CUdeviceptr ptr) {
-		fprintf(stderr, "cuMemGetAccess()\n");
+		fprintf(stderr, "===============\ncuMemGetAccess()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemGetAccess():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemGetAccess(
+		CUresult retval = original_cuMemGetAccess(
 		flags, 
 		location, 
 		ptr
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

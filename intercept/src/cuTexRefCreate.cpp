@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefCreate(CUtexref *pTexRef) {
-		fprintf(stderr, "cuTexRefCreate()\n");
+		fprintf(stderr, "===============\ncuTexRefCreate()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefCreate():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefCreate(
+		CUresult retval = original_cuTexRefCreate(
 		pTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

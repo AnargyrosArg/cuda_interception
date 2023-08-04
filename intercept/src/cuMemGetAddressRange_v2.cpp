@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemGetAddressRange_v2(CUdeviceptr *pbase, size_t *psize, CUdeviceptr dptr) {
-		fprintf(stderr, "cuMemGetAddressRange_v2()\n");
+		fprintf(stderr, "===============\ncuMemGetAddressRange_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemGetAddressRange_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemGetAddressRange_v2(
+		CUresult retval = original_cuMemGetAddressRange_v2(
 		pbase, 
 		psize, 
 		dptr
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemcpyPeer(CUdeviceptr dstDevice, CUcontext dstContext, CUdeviceptr srcDevice, CUcontext srcContext, size_t ByteCount) {
-		fprintf(stderr, "cuMemcpyPeer()\n");
+		fprintf(stderr, "===============\ncuMemcpyPeer()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemcpyPeer():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemcpyPeer(
+		CUresult retval = original_cuMemcpyPeer(
 		dstDevice, 
 		dstContext, 
 		srcDevice, 
 		srcContext, 
 		ByteCount
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

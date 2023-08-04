@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphicsResourceGetMappedPointer_v2(CUdeviceptr *pDevPtr, size_t *pSize, CUgraphicsResource resource) {
-		fprintf(stderr, "cuGraphicsResourceGetMappedPointer_v2()\n");
+		fprintf(stderr, "===============\ncuGraphicsResourceGetMappedPointer_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphicsResourceGetMappedPointer_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphicsResourceGetMappedPointer_v2(
+		CUresult retval = original_cuGraphicsResourceGetMappedPointer_v2(
 		pDevPtr, 
 		pSize, 
 		resource
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

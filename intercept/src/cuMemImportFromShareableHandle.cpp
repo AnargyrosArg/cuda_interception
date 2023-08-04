@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemImportFromShareableHandle(CUmemGenericAllocationHandle *handle, void *osHandle, CUmemAllocationHandleType shHandleType) {
-		fprintf(stderr, "cuMemImportFromShareableHandle()\n");
+		fprintf(stderr, "===============\ncuMemImportFromShareableHandle()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemImportFromShareableHandle():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemImportFromShareableHandle(
+		CUresult retval = original_cuMemImportFromShareableHandle(
 		handle, 
 		osHandle, 
 		shHandleType
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

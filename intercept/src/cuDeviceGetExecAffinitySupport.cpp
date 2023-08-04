@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetExecAffinitySupport(int *pi, CUexecAffinityType type, CUdevice dev) {
-		fprintf(stderr, "cuDeviceGetExecAffinitySupport()\n");
+		fprintf(stderr, "===============\ncuDeviceGetExecAffinitySupport()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetExecAffinitySupport():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetExecAffinitySupport(
+		CUresult retval = original_cuDeviceGetExecAffinitySupport(
 		pi, 
 		type, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

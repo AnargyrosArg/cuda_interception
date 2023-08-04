@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexObjectGetTextureDesc(CUDA_TEXTURE_DESC *pTexDesc, CUtexObject texObject) {
-		fprintf(stderr, "cuTexObjectGetTextureDesc()\n");
+		fprintf(stderr, "===============\ncuTexObjectGetTextureDesc()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexObjectGetTextureDesc():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexObjectGetTextureDesc(
+		CUresult retval = original_cuTexObjectGetTextureDesc(
 		pTexDesc, 
 		texObject
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

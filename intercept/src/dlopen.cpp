@@ -14,7 +14,12 @@ void* original_libnvrtc_handle = NULL;
 void* libintercept_handle = NULL;
 
 
+
+
 extern "C"{
+    void* __libc_dlopen_mode (const char*,int); 
+
+
     void *dlopen(const char *filename, int flag){
         char* error;
         void* retval;
@@ -25,7 +30,7 @@ extern "C"{
 
         //get pointer to original dlopen function if not already fetched
         if(!original_dlopen){
-    	    original_dlopen = (void* (*)(const char*,int)) dlsym(RTLD_NEXT, "dlopen");
+    	    original_dlopen = (void* (*)(const char*,int)) dlsym(__libc_dlopen_mode("libdl.so.2",RTLD_LAZY), "dlopen");
             error = dlerror();
             if(error){
                 fprintf(stderr,"Error occured while dlsym-ing dlopen: %s\n original_dlopen:%p\n",error,original_dlopen);
@@ -33,7 +38,7 @@ extern "C"{
             }
         }
         if(libintercept_handle == NULL){
-            libintercept_handle = original_dlopen("libintercept.so",flag);
+            libintercept_handle = original_dlopen("libintercept.so",RTLD_NOW | RTLD_GLOBAL);
             error = dlerror();
             if(error){
                 fprintf(stderr,"Cannot find intercept library: %s\n",error);
@@ -47,15 +52,19 @@ extern "C"{
             //if original libcuda has never been loaded before, we open it and keep a handle to it for internal use
             //this handle is not returned to the calling function
             if(original_libcuda_handle == NULL){
+                original_libcuda_handle = original_dlopen("libcuda.so.1", RTLD_LAZY | RTLD_LOCAL);
                 fprintf(stderr,"Interceptor just dlopened libcuda for the first time\n");
-                original_libcuda_handle = original_dlopen("libcuda.so.1", flag);
+                // fprintf(stderr,"LOCAL | LAZY -> %d\n",RTLD_LAZY | RTLD_LOCAL);
+                // fprintf(stderr,"GLOBAL | LAZY -> %d\n",RTLD_LAZY | RTLD_GLOBAL);
+                // fprintf(stderr,"LOCAL | NOW -> %d\n",RTLD_NOW | RTLD_LOCAL);
+                // fprintf(stderr,"GLOBAL | NOW -> %d\n",RTLD_NOW | RTLD_GLOBAL);
                 fprintf(stderr,"original libcuda handle:%p\n",original_libcuda_handle);
             }
             //return our own lib instead
             retval = libintercept_handle;
             error = dlerror();
             if(error){
-                fprintf(stderr,"Cannot find intercept library: %s\n",error);
+                fprintf(stderr,"%s\n",error);
                 exit(-1);
             }
 

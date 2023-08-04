@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetMemPool(CUmemoryPool *pool, CUdevice dev) {
-		fprintf(stderr, "cuDeviceGetMemPool()\n");
+		fprintf(stderr, "===============\ncuDeviceGetMemPool()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetMemPool():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetMemPool(
+		CUresult retval = original_cuDeviceGetMemPool(
 		pool, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

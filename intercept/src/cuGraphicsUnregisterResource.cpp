@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphicsUnregisterResource(CUgraphicsResource resource) {
-		fprintf(stderr, "cuGraphicsUnregisterResource()\n");
+		fprintf(stderr, "===============\ncuGraphicsUnregisterResource()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphicsUnregisterResource():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphicsUnregisterResource(
+		CUresult retval = original_cuGraphicsUnregisterResource(
 		resource
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

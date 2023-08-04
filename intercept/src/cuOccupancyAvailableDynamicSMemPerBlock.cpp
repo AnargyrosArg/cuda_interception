@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuOccupancyAvailableDynamicSMemPerBlock(size_t *dynamicSmemSize, CUfunction func, int numBlocks, int blockSize) {
-		fprintf(stderr, "cuOccupancyAvailableDynamicSMemPerBlock()\n");
+		fprintf(stderr, "===============\ncuOccupancyAvailableDynamicSMemPerBlock()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuOccupancyAvailableDynamicSMemPerBlock():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuOccupancyAvailableDynamicSMemPerBlock(
+		CUresult retval = original_cuOccupancyAvailableDynamicSMemPerBlock(
 		dynamicSmemSize, 
 		func, 
 		numBlocks, 
 		blockSize
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

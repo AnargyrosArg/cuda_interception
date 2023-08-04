@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxGetFlags(unsigned int *flags) {
-		fprintf(stderr, "cuCtxGetFlags()\n");
+		fprintf(stderr, "===============\ncuCtxGetFlags()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxGetFlags():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxGetFlags(
+		CUresult retval = original_cuCtxGetFlags(
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

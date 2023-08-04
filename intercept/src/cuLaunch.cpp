@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuLaunch(CUfunction f) {
-		fprintf(stderr, "cuLaunch()\n");
+		fprintf(stderr, "===============\ncuLaunch()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuLaunch():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuLaunch(
+		CUresult retval = original_cuLaunch(
 		f
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamBatchMemOp(CUstream stream, unsigned int count, CUstreamBatchMemOpParams *paramArray, unsigned int flags) {
-		fprintf(stderr, "cuStreamBatchMemOp()\n");
+		fprintf(stderr, "===============\ncuStreamBatchMemOp()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamBatchMemOp():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamBatchMemOp(
+		CUresult retval = original_cuStreamBatchMemOp(
 		stream, 
 		count, 
 		paramArray, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

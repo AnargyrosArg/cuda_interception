@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphNodeGetEnabled(CUgraphExec hGraphExec, CUgraphNode hNode, unsigned int *isEnabled) {
-		fprintf(stderr, "cuGraphNodeGetEnabled()\n");
+		fprintf(stderr, "===============\ncuGraphNodeGetEnabled()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphNodeGetEnabled():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphNodeGetEnabled(
+		CUresult retval = original_cuGraphNodeGetEnabled(
 		hGraphExec, 
 		hNode, 
 		isEnabled
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

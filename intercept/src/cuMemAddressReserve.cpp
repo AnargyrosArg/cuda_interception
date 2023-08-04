@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemAddressReserve(CUdeviceptr *ptr, size_t size, size_t alignment, CUdeviceptr addr, unsigned long long flags) {
-		fprintf(stderr, "cuMemAddressReserve()\n");
+		fprintf(stderr, "===============\ncuMemAddressReserve()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemAddressReserve():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemAddressReserve(
+		CUresult retval = original_cuMemAddressReserve(
 		ptr, 
 		size, 
 		alignment, 
 		addr, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

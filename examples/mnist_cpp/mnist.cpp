@@ -115,8 +115,6 @@ void test(
 auto main() -> int {
   torch::manual_seed(1);
 
-  //disable cuDNN, it throws errors
-  at::globalContext().setUserEnabledCuDNN(false);
   
   torch::DeviceType device_type;
   if (torch::cuda::is_available()) {

@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphEventRecordNodeGetEvent(CUgraphNode hNode, CUevent *event_out) {
-		fprintf(stderr, "cuGraphEventRecordNodeGetEvent()\n");
+		fprintf(stderr, "===============\ncuGraphEventRecordNodeGetEvent()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphEventRecordNodeGetEvent():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphEventRecordNodeGetEvent(
+		CUresult retval = original_cuGraphEventRecordNodeGetEvent(
 		hNode, 
 		event_out
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

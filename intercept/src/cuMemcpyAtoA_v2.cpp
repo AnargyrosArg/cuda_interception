@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemcpyAtoA_v2(CUarray dstArray, size_t dstOffset, CUarray srcArray, size_t srcOffset, size_t ByteCount) {
-		fprintf(stderr, "cuMemcpyAtoA_v2()\n");
+		fprintf(stderr, "===============\ncuMemcpyAtoA_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemcpyAtoA_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemcpyAtoA_v2(
+		CUresult retval = original_cuMemcpyAtoA_v2(
 		dstArray, 
 		dstOffset, 
 		srcArray, 
 		srcOffset, 
 		ByteCount
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

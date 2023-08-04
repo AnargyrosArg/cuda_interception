@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphAddMemAllocNode(CUgraphNode *phGraphNode, CUgraph hGraph, const CUgraphNode *dependencies, size_t numDependencies, CUDA_MEM_ALLOC_NODE_PARAMS *nodeParams) {
-		fprintf(stderr, "cuGraphAddMemAllocNode()\n");
+		fprintf(stderr, "===============\ncuGraphAddMemAllocNode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphAddMemAllocNode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphAddMemAllocNode(
+		CUresult retval = original_cuGraphAddMemAllocNode(
 		phGraphNode, 
 		hGraph, 
 		dependencies, 
 		numDependencies, 
 		nodeParams
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

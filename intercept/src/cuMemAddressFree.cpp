@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemAddressFree(CUdeviceptr ptr, size_t size) {
-		fprintf(stderr, "cuMemAddressFree()\n");
+		fprintf(stderr, "===============\ncuMemAddressFree()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemAddressFree():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemAddressFree(
+		CUresult retval = original_cuMemAddressFree(
 		ptr, 
 		size
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemPoolCreate(CUmemoryPool *pool, const CUmemPoolProps *poolProps) {
-		fprintf(stderr, "cuMemPoolCreate()\n");
+		fprintf(stderr, "===============\ncuMemPoolCreate()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemPoolCreate():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemPoolCreate(
+		CUresult retval = original_cuMemPoolCreate(
 		pool, 
 		poolProps
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

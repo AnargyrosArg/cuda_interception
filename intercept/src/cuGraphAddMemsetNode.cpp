@@ -14,7 +14,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphAddMemsetNode(CUgraphNode *phGraphNode, CUgraph hGraph, const CUgraphNode *dependencies, size_t numDependencies, const CUDA_MEMSET_NODE_PARAMS *memsetParams, CUcontext ctx) {
-		fprintf(stderr, "cuGraphAddMemsetNode()\n");
+		fprintf(stderr, "===============\ncuGraphAddMemsetNode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -40,7 +40,7 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphAddMemsetNode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphAddMemsetNode(
+		CUresult retval = original_cuGraphAddMemsetNode(
 		phGraphNode, 
 		hGraph, 
 		dependencies, 
@@ -48,5 +48,7 @@ extern "C"
 		memsetParams, 
 		ctx
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

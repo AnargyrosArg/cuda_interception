@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamGetCaptureInfo(CUstream hStream, CUstreamCaptureStatus *captureStatus_out, cuuint64_t *id_out) {
-		fprintf(stderr, "cuStreamGetCaptureInfo()\n");
+		fprintf(stderr, "===============\ncuStreamGetCaptureInfo()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamGetCaptureInfo():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamGetCaptureInfo(
+		CUresult retval = original_cuStreamGetCaptureInfo(
 		hStream, 
 		captureStatus_out, 
 		id_out
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

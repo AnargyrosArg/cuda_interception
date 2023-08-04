@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuArray3DCreate_v2(CUarray *pHandle, const CUDA_ARRAY3D_DESCRIPTOR *pAllocateArray) {
-		fprintf(stderr, "cuArray3DCreate_v2()\n");
+		fprintf(stderr, "===============\ncuArray3DCreate_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuArray3DCreate_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuArray3DCreate_v2(
+		CUresult retval = original_cuArray3DCreate_v2(
 		pHandle, 
 		pAllocateArray
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

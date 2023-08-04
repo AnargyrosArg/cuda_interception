@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemGetAllocationPropertiesFromHandle(CUmemAllocationProp *prop, CUmemGenericAllocationHandle handle) {
-		fprintf(stderr, "cuMemGetAllocationPropertiesFromHandle()\n");
+		fprintf(stderr, "===============\ncuMemGetAllocationPropertiesFromHandle()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemGetAllocationPropertiesFromHandle():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemGetAllocationPropertiesFromHandle(
+		CUresult retval = original_cuMemGetAllocationPropertiesFromHandle(
 		prop, 
 		handle
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -14,7 +14,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemsetD2D16Async(CUdeviceptr dstDevice, size_t dstPitch, unsigned short us, size_t Width, size_t Height, CUstream hStream) {
-		fprintf(stderr, "cuMemsetD2D16Async()\n");
+		fprintf(stderr, "===============\ncuMemsetD2D16Async()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -40,7 +40,7 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemsetD2D16Async():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemsetD2D16Async(
+		CUresult retval = original_cuMemsetD2D16Async(
 		dstDevice, 
 		dstPitch, 
 		us, 
@@ -48,5 +48,7 @@ extern "C"
 		Height, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

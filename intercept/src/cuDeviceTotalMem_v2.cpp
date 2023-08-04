@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceTotalMem_v2(size_t *bytes, CUdevice dev) {
-		fprintf(stderr, "cuDeviceTotalMem_v2()\n");
+		fprintf(stderr, "===============\ncuDeviceTotalMem_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceTotalMem_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceTotalMem_v2(
+		CUresult retval = original_cuDeviceTotalMem_v2(
 		bytes, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

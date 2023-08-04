@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceGetGraphMemAttribute(CUdevice device, CUgraphMem_attribute attr, void *value) {
-		fprintf(stderr, "cuDeviceGetGraphMemAttribute()\n");
+		fprintf(stderr, "===============\ncuDeviceGetGraphMemAttribute()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceGetGraphMemAttribute():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceGetGraphMemAttribute(
+		CUresult retval = original_cuDeviceGetGraphMemAttribute(
 		device, 
 		attr, 
 		value
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

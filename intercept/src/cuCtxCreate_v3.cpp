@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxCreate_v3(CUcontext *pctx, CUexecAffinityParam *paramsArray, int numParams, unsigned int flags, CUdevice dev) {
-		fprintf(stderr, "cuCtxCreate_v3()\n");
+		fprintf(stderr, "===============\ncuCtxCreate_v3()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxCreate_v3():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxCreate_v3(
+		CUresult retval = original_cuCtxCreate_v3(
 		pctx, 
 		paramsArray, 
 		numParams, 
 		flags, 
 		dev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -14,7 +14,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemcpyPeerAsync(CUdeviceptr dstDevice, CUcontext dstContext, CUdeviceptr srcDevice, CUcontext srcContext, size_t ByteCount, CUstream hStream) {
-		fprintf(stderr, "cuMemcpyPeerAsync()\n");
+		fprintf(stderr, "===============\ncuMemcpyPeerAsync()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -40,7 +40,7 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemcpyPeerAsync():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemcpyPeerAsync(
+		CUresult retval = original_cuMemcpyPeerAsync(
 		dstDevice, 
 		dstContext, 
 		srcDevice, 
@@ -48,5 +48,7 @@ extern "C"
 		ByteCount, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

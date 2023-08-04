@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDevicePrimaryCtxGetState(CUdevice dev, unsigned int *flags, int *active) {
-		fprintf(stderr, "cuDevicePrimaryCtxGetState()\n");
+		fprintf(stderr, "===============\ncuDevicePrimaryCtxGetState()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDevicePrimaryCtxGetState():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDevicePrimaryCtxGetState(
+		CUresult retval = original_cuDevicePrimaryCtxGetState(
 		dev, 
 		flags, 
 		active
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

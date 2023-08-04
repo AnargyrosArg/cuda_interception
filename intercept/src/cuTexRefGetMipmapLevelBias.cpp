@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefGetMipmapLevelBias(float *pbias, CUtexref hTexRef) {
-		fprintf(stderr, "cuTexRefGetMipmapLevelBias()\n");
+		fprintf(stderr, "===============\ncuTexRefGetMipmapLevelBias()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefGetMipmapLevelBias():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefGetMipmapLevelBias(
+		CUresult retval = original_cuTexRefGetMipmapLevelBias(
 		pbias, 
 		hTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

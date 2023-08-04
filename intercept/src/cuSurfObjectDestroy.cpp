@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuSurfObjectDestroy(CUsurfObject surfObject) {
-		fprintf(stderr, "cuSurfObjectDestroy()\n");
+		fprintf(stderr, "===============\ncuSurfObjectDestroy()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuSurfObjectDestroy():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuSurfObjectDestroy(
+		CUresult retval = original_cuSurfObjectDestroy(
 		surfObject
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

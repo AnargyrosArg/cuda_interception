@@ -14,7 +14,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuOccupancyMaxPotentialBlockSize(int *minGridSize, int *blockSize, CUfunction func, CUoccupancyB2DSize blockSizeToDynamicSMemSize, size_t dynamicSMemSize, int blockSizeLimit) {
-		fprintf(stderr, "cuOccupancyMaxPotentialBlockSize()\n");
+		fprintf(stderr, "===============\ncuOccupancyMaxPotentialBlockSize()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -40,7 +40,7 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuOccupancyMaxPotentialBlockSize():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuOccupancyMaxPotentialBlockSize(
+		CUresult retval = original_cuOccupancyMaxPotentialBlockSize(
 		minGridSize, 
 		blockSize, 
 		func, 
@@ -48,5 +48,7 @@ extern "C"
 		dynamicSMemSize, 
 		blockSizeLimit
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

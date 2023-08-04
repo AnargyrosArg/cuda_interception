@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuPointerGetAttributes(unsigned int numAttributes, CUpointer_attribute *attributes, void **data, CUdeviceptr ptr) {
-		fprintf(stderr, "cuPointerGetAttributes()\n");
+		fprintf(stderr, "===============\ncuPointerGetAttributes()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuPointerGetAttributes():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuPointerGetAttributes(
+		CUresult retval = original_cuPointerGetAttributes(
 		numAttributes, 
 		attributes, 
 		data, 
 		ptr
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

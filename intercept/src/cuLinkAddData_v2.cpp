@@ -16,7 +16,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuLinkAddData_v2(CUlinkState state, CUjitInputType type, void *data, size_t size, const char *name, unsigned int numOptions, CUjit_option *options, void **optionValues) {
-		fprintf(stderr, "cuLinkAddData_v2()\n");
+		fprintf(stderr, "===============\ncuLinkAddData_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -44,7 +44,7 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuLinkAddData_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuLinkAddData_v2(
+		CUresult retval = original_cuLinkAddData_v2(
 		state, 
 		type, 
 		data, 
@@ -54,5 +54,7 @@ extern "C"
 		options, 
 		optionValues
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

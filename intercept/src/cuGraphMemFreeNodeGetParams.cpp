@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphMemFreeNodeGetParams(CUgraphNode hNode, CUdeviceptr *dptr_out) {
-		fprintf(stderr, "cuGraphMemFreeNodeGetParams()\n");
+		fprintf(stderr, "===============\ncuGraphMemFreeNodeGetParams()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphMemFreeNodeGetParams():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphMemFreeNodeGetParams(
+		CUresult retval = original_cuGraphMemFreeNodeGetParams(
 		hNode, 
 		dptr_out
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

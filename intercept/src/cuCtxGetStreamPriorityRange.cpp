@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxGetStreamPriorityRange(int *leastPriority, int *greatestPriority) {
-		fprintf(stderr, "cuCtxGetStreamPriorityRange()\n");
+		fprintf(stderr, "===============\ncuCtxGetStreamPriorityRange()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxGetStreamPriorityRange():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxGetStreamPriorityRange(
+		CUresult retval = original_cuCtxGetStreamPriorityRange(
 		leastPriority, 
 		greatestPriority
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -14,7 +14,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamGetCaptureInfo_v2(CUstream hStream, CUstreamCaptureStatus *captureStatus_out, cuuint64_t *id_out, CUgraph *graph_out, const CUgraphNode **dependencies_out, size_t *numDependencies_out) {
-		fprintf(stderr, "cuStreamGetCaptureInfo_v2()\n");
+		fprintf(stderr, "===============\ncuStreamGetCaptureInfo_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -40,7 +40,7 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamGetCaptureInfo_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamGetCaptureInfo_v2(
+		CUresult retval = original_cuStreamGetCaptureInfo_v2(
 		hStream, 
 		captureStatus_out, 
 		id_out, 
@@ -48,5 +48,7 @@ extern "C"
 		dependencies_out, 
 		numDependencies_out
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

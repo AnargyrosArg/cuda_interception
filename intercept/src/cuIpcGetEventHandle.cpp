@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuIpcGetEventHandle(CUipcEventHandle *pHandle, CUevent event) {
-		fprintf(stderr, "cuIpcGetEventHandle()\n");
+		fprintf(stderr, "===============\ncuIpcGetEventHandle()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuIpcGetEventHandle():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuIpcGetEventHandle(
+		CUresult retval = original_cuIpcGetEventHandle(
 		pHandle, 
 		event
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

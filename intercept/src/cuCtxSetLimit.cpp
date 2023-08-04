@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxSetLimit(CUlimit limit, size_t value) {
-		fprintf(stderr, "cuCtxSetLimit()\n");
+		fprintf(stderr, "===============\ncuCtxSetLimit()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxSetLimit():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxSetLimit(
+		CUresult retval = original_cuCtxSetLimit(
 		limit, 
 		value
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

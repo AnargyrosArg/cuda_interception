@@ -13,7 +13,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphAddEventRecordNode(CUgraphNode *phGraphNode, CUgraph hGraph, const CUgraphNode *dependencies, size_t numDependencies, CUevent event) {
-		fprintf(stderr, "cuGraphAddEventRecordNode()\n");
+		fprintf(stderr, "===============\ncuGraphAddEventRecordNode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -38,12 +38,14 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphAddEventRecordNode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphAddEventRecordNode(
+		CUresult retval = original_cuGraphAddEventRecordNode(
 		phGraphNode, 
 		hGraph, 
 		dependencies, 
 		numDependencies, 
 		event
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuFuncSetCacheConfig(CUfunction hfunc, CUfunc_cache config) {
-		fprintf(stderr, "cuFuncSetCacheConfig()\n");
+		fprintf(stderr, "===============\ncuFuncSetCacheConfig()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuFuncSetCacheConfig():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuFuncSetCacheConfig(
+		CUresult retval = original_cuFuncSetCacheConfig(
 		hfunc, 
 		config
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

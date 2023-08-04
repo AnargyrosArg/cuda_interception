@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamWriteValue64_v2(CUstream stream, CUdeviceptr addr, cuuint64_t value, unsigned int flags) {
-		fprintf(stderr, "cuStreamWriteValue64_v2()\n");
+		fprintf(stderr, "===============\ncuStreamWriteValue64_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamWriteValue64_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamWriteValue64_v2(
+		CUresult retval = original_cuStreamWriteValue64_v2(
 		stream, 
 		addr, 
 		value, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

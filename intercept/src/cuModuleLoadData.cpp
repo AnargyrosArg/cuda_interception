@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuModuleLoadData(CUmodule *module, const void *image) {
-		fprintf(stderr, "cuModuleLoadData()\n");
+		fprintf(stderr, "===============\ncuModuleLoadData()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuModuleLoadData():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuModuleLoadData(
+		CUresult retval = original_cuModuleLoadData(
 		module, 
 		image
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

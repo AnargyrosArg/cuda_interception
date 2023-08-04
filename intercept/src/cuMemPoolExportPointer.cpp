@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemPoolExportPointer(CUmemPoolPtrExportData *shareData_out, CUdeviceptr ptr) {
-		fprintf(stderr, "cuMemPoolExportPointer()\n");
+		fprintf(stderr, "===============\ncuMemPoolExportPointer()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemPoolExportPointer():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemPoolExportPointer(
+		CUresult retval = original_cuMemPoolExportPointer(
 		shareData_out, 
 		ptr
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -8,7 +8,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxResetPersistingL2Cache() {
-		fprintf(stderr, "cuCtxResetPersistingL2Cache()\n");
+		fprintf(stderr, "===============\ncuCtxResetPersistingL2Cache()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -29,7 +29,9 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxResetPersistingL2Cache():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxResetPersistingL2Cache(
+		CUresult retval = original_cuCtxResetPersistingL2Cache(
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

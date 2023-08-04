@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuSurfRefGetArray(CUarray *phArray, CUsurfref hSurfRef) {
-		fprintf(stderr, "cuSurfRefGetArray()\n");
+		fprintf(stderr, "===============\ncuSurfRefGetArray()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuSurfRefGetArray():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuSurfRefGetArray(
+		CUresult retval = original_cuSurfRefGetArray(
 		phArray, 
 		hSurfRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemAllocManaged(CUdeviceptr *dptr, size_t bytesize, unsigned int flags) {
-		fprintf(stderr, "cuMemAllocManaged()\n");
+		fprintf(stderr, "===============\ncuMemAllocManaged()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemAllocManaged():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemAllocManaged(
+		CUresult retval = original_cuMemAllocManaged(
 		dptr, 
 		bytesize, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

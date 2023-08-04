@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxGetApiVersion(CUcontext ctx, unsigned int *version) {
-		fprintf(stderr, "cuCtxGetApiVersion()\n");
+		fprintf(stderr, "===============\ncuCtxGetApiVersion()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxGetApiVersion():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxGetApiVersion(
+		CUresult retval = original_cuCtxGetApiVersion(
 		ctx, 
 		version
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

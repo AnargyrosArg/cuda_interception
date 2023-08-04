@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemRelease(CUmemGenericAllocationHandle handle) {
-		fprintf(stderr, "cuMemRelease()\n");
+		fprintf(stderr, "===============\ncuMemRelease()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemRelease():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemRelease(
+		CUresult retval = original_cuMemRelease(
 		handle
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

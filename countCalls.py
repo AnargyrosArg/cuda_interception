@@ -1,6 +1,6 @@
 import sys
 import matplotlib.pyplot as plt
-
+from matplotlib import ticker
 file = open(sys.argv[1])
 
 
@@ -21,7 +21,8 @@ print("{" + "\n".join("{!r}: {!r},".format(k, v) for k, v in counters.items()) +
 
 counters = sorted(counters.items(), key=lambda x:x[1])
 counters = dict(counters)
-width = 0.5
+width = 0.8
+plt.figure(figsize=(12,4))
 plt.bar(counters.keys(), counters.values(),width)
 plt.yscale("log")
 plt.xticks(rotation=90)

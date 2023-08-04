@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphicsSubResourceGetMappedArray(CUarray *pArray, CUgraphicsResource resource, unsigned int arrayIndex, unsigned int mipLevel) {
-		fprintf(stderr, "cuGraphicsSubResourceGetMappedArray()\n");
+		fprintf(stderr, "===============\ncuGraphicsSubResourceGetMappedArray()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphicsSubResourceGetMappedArray():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphicsSubResourceGetMappedArray(
+		CUresult retval = original_cuGraphicsSubResourceGetMappedArray(
 		pArray, 
 		resource, 
 		arrayIndex, 
 		mipLevel
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

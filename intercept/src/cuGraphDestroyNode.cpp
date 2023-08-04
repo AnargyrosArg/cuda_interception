@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphDestroyNode(CUgraphNode hNode) {
-		fprintf(stderr, "cuGraphDestroyNode()\n");
+		fprintf(stderr, "===============\ncuGraphDestroyNode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphDestroyNode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphDestroyNode(
+		CUresult retval = original_cuGraphDestroyNode(
 		hNode
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuLaunchHostFunc(CUstream hStream, CUhostFn fn, void *userData) {
-		fprintf(stderr, "cuLaunchHostFunc()\n");
+		fprintf(stderr, "===============\ncuLaunchHostFunc()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuLaunchHostFunc():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuLaunchHostFunc(
+		CUresult retval = original_cuLaunchHostFunc(
 		hStream, 
 		fn, 
 		userData
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

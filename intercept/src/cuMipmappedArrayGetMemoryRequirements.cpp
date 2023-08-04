@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMipmappedArrayGetMemoryRequirements(CUDA_ARRAY_MEMORY_REQUIREMENTS *memoryRequirements, CUmipmappedArray mipmap, CUdevice device) {
-		fprintf(stderr, "cuMipmappedArrayGetMemoryRequirements()\n");
+		fprintf(stderr, "===============\ncuMipmappedArrayGetMemoryRequirements()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMipmappedArrayGetMemoryRequirements():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMipmappedArrayGetMemoryRequirements(
+		CUresult retval = original_cuMipmappedArrayGetMemoryRequirements(
 		memoryRequirements, 
 		mipmap, 
 		device
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

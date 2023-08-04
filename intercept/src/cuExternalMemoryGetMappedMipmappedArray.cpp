@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuExternalMemoryGetMappedMipmappedArray(CUmipmappedArray *mipmap, CUexternalMemory extMem, const CUDA_EXTERNAL_MEMORY_MIPMAPPED_ARRAY_DESC *mipmapDesc) {
-		fprintf(stderr, "cuExternalMemoryGetMappedMipmappedArray()\n");
+		fprintf(stderr, "===============\ncuExternalMemoryGetMappedMipmappedArray()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuExternalMemoryGetMappedMipmappedArray():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuExternalMemoryGetMappedMipmappedArray(
+		CUresult retval = original_cuExternalMemoryGetMappedMipmappedArray(
 		mipmap, 
 		extMem, 
 		mipmapDesc
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuDeviceCanAccessPeer(int *canAccessPeer, CUdevice dev, CUdevice peerDev) {
-		fprintf(stderr, "cuDeviceCanAccessPeer()\n");
+		fprintf(stderr, "===============\ncuDeviceCanAccessPeer()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuDeviceCanAccessPeer():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuDeviceCanAccessPeer(
+		CUresult retval = original_cuDeviceCanAccessPeer(
 		canAccessPeer, 
 		dev, 
 		peerDev
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

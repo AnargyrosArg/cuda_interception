@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMipmappedArrayGetSparseProperties(CUDA_ARRAY_SPARSE_PROPERTIES *sparseProperties, CUmipmappedArray mipmap) {
-		fprintf(stderr, "cuMipmappedArrayGetSparseProperties()\n");
+		fprintf(stderr, "===============\ncuMipmappedArrayGetSparseProperties()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMipmappedArrayGetSparseProperties():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMipmappedArrayGetSparseProperties(
+		CUresult retval = original_cuMipmappedArrayGetSparseProperties(
 		sparseProperties, 
 		mipmap
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

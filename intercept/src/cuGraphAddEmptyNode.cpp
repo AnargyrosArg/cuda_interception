@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphAddEmptyNode(CUgraphNode *phGraphNode, CUgraph hGraph, const CUgraphNode *dependencies, size_t numDependencies) {
-		fprintf(stderr, "cuGraphAddEmptyNode()\n");
+		fprintf(stderr, "===============\ncuGraphAddEmptyNode()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphAddEmptyNode():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphAddEmptyNode(
+		CUresult retval = original_cuGraphAddEmptyNode(
 		phGraphNode, 
 		hGraph, 
 		dependencies, 
 		numDependencies
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

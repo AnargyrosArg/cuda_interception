@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxGetExecAffinity(CUexecAffinityParam *pExecAffinity, CUexecAffinityType type) {
-		fprintf(stderr, "cuCtxGetExecAffinity()\n");
+		fprintf(stderr, "===============\ncuCtxGetExecAffinity()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxGetExecAffinity():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxGetExecAffinity(
+		CUresult retval = original_cuCtxGetExecAffinity(
 		pExecAffinity, 
 		type
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

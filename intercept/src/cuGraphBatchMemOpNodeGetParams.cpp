@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphBatchMemOpNodeGetParams(CUgraphNode hNode, CUDA_BATCH_MEM_OP_NODE_PARAMS *nodeParams_out) {
-		fprintf(stderr, "cuGraphBatchMemOpNodeGetParams()\n");
+		fprintf(stderr, "===============\ncuGraphBatchMemOpNodeGetParams()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphBatchMemOpNodeGetParams():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphBatchMemOpNodeGetParams(
+		CUresult retval = original_cuGraphBatchMemOpNodeGetParams(
 		hNode, 
 		nodeParams_out
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuGraphInstantiateWithFlags(CUgraphExec *phGraphExec, CUgraph hGraph, unsigned long long flags) {
-		fprintf(stderr, "cuGraphInstantiateWithFlags()\n");
+		fprintf(stderr, "===============\ncuGraphInstantiateWithFlags()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuGraphInstantiateWithFlags():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuGraphInstantiateWithFlags(
+		CUresult retval = original_cuGraphInstantiateWithFlags(
 		phGraphExec, 
 		hGraph, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

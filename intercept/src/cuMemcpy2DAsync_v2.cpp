@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemcpy2DAsync_v2(const CUDA_MEMCPY2D *pCopy, CUstream hStream) {
-		fprintf(stderr, "cuMemcpy2DAsync_v2()\n");
+		fprintf(stderr, "===============\ncuMemcpy2DAsync_v2()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemcpy2DAsync_v2():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemcpy2DAsync_v2(
+		CUresult retval = original_cuMemcpy2DAsync_v2(
 		pCopy, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

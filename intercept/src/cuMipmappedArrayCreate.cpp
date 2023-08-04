@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMipmappedArrayCreate(CUmipmappedArray *pHandle, const CUDA_ARRAY3D_DESCRIPTOR *pMipmappedArrayDesc, unsigned int numMipmapLevels) {
-		fprintf(stderr, "cuMipmappedArrayCreate()\n");
+		fprintf(stderr, "===============\ncuMipmappedArrayCreate()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMipmappedArrayCreate():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMipmappedArrayCreate(
+		CUresult retval = original_cuMipmappedArrayCreate(
 		pHandle, 
 		pMipmappedArrayDesc, 
 		numMipmapLevels
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

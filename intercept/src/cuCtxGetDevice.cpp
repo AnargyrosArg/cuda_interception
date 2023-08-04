@@ -9,7 +9,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuCtxGetDevice(CUdevice *device) {
-		fprintf(stderr, "cuCtxGetDevice()\n");
+		fprintf(stderr, "===============\ncuCtxGetDevice()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -30,8 +30,10 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuCtxGetDevice():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuCtxGetDevice(
+		CUresult retval = original_cuCtxGetDevice(
 		device
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

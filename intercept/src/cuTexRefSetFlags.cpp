@@ -10,7 +10,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefSetFlags(CUtexref hTexRef, unsigned int Flags) {
-		fprintf(stderr, "cuTexRefSetFlags()\n");
+		fprintf(stderr, "===============\ncuTexRefSetFlags()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -32,9 +32,11 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefSetFlags():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefSetFlags(
+		CUresult retval = original_cuTexRefSetFlags(
 		hTexRef, 
 		Flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

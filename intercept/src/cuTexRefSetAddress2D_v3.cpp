@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefSetAddress2D_v3(CUtexref hTexRef, const CUDA_ARRAY_DESCRIPTOR *desc, CUdeviceptr dptr, size_t Pitch) {
-		fprintf(stderr, "cuTexRefSetAddress2D_v3()\n");
+		fprintf(stderr, "===============\ncuTexRefSetAddress2D_v3()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefSetAddress2D_v3():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefSetAddress2D_v3(
+		CUresult retval = original_cuTexRefSetAddress2D_v3(
 		hTexRef, 
 		desc, 
 		dptr, 
 		Pitch
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuEventElapsedTime(float *pMilliseconds, CUevent hStart, CUevent hEnd) {
-		fprintf(stderr, "cuEventElapsedTime()\n");
+		fprintf(stderr, "===============\ncuEventElapsedTime()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuEventElapsedTime():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuEventElapsedTime(
+		CUresult retval = original_cuEventElapsedTime(
 		pMilliseconds, 
 		hStart, 
 		hEnd
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

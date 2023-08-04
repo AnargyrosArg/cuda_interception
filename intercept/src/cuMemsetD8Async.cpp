@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuMemsetD8Async(CUdeviceptr dstDevice, unsigned char uc, size_t N, CUstream hStream) {
-		fprintf(stderr, "cuMemsetD8Async()\n");
+		fprintf(stderr, "===============\ncuMemsetD8Async()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuMemsetD8Async():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuMemsetD8Async(
+		CUresult retval = original_cuMemsetD8Async(
 		dstDevice, 
 		uc, 
 		N, 
 		hStream
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

@@ -11,7 +11,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuTexRefGetFormat(CUarray_format *pFormat, int *pNumChannels, CUtexref hTexRef) {
-		fprintf(stderr, "cuTexRefGetFormat()\n");
+		fprintf(stderr, "===============\ncuTexRefGetFormat()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -34,10 +34,12 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuTexRefGetFormat():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuTexRefGetFormat(
+		CUresult retval = original_cuTexRefGetFormat(
 		pFormat, 
 		pNumChannels, 
 		hTexRef
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }

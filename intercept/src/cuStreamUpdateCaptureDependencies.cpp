@@ -12,7 +12,7 @@ extern void* original_libcuda_handle;
 extern "C"
 {
 	CUresult cuStreamUpdateCaptureDependencies(CUstream hStream, CUgraphNode *dependencies, size_t numDependencies, unsigned int flags) {
-		fprintf(stderr, "cuStreamUpdateCaptureDependencies()\n");
+		fprintf(stderr, "===============\ncuStreamUpdateCaptureDependencies()\n");
 		char* __dlerror;
 		//this call clears any previous errors
 		dlerror();
@@ -36,11 +36,13 @@ extern "C"
 			fprintf(stderr, "dlsym error for function cuStreamUpdateCaptureDependencies():%s\n", __dlerror);
 			fflush(stderr);
 		}
-		return original_cuStreamUpdateCaptureDependencies(
+		CUresult retval = original_cuStreamUpdateCaptureDependencies(
 		hStream, 
 		dependencies, 
 		numDependencies, 
 		flags
 		);
+		fprintf(stderr, "===============\n");
+		return retval;
 	}
 }
