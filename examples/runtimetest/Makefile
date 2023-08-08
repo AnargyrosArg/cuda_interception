@@ -1,6 +1,6 @@
 
 out: vectoradd.cu
-	nvcc vectoradd.cu
+	nvcc -g vectoradd.cu
 #-lcudart 
 #-lcuda
 

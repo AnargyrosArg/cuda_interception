@@ -64,6 +64,85 @@ const void*  FAKE_EXPORT_TABLE[] = {
 	(void*)trampoline<46>,
 	(void*)trampoline<47>,
 	(void*)trampoline<48>,
+	(void*)trampoline<49>,
+	(void*)trampoline<50>,
+	(void*)trampoline<51>,
+	(void*)trampoline<52>,
+	(void*)trampoline<53>,
+	(void*)trampoline<54>,
+	(void*)trampoline<55>,
+	(void*)trampoline<56>,
+	(void*)trampoline<57>,
+	(void*)trampoline<58>,
+	(void*)trampoline<59>,
+	(void*)trampoline<60>,
+	(void*)trampoline<61>,
+	(void*)trampoline<62>,
+	(void*)trampoline<63>,
+	(void*)trampoline<64>,
+	(void*)trampoline<65>,
+	(void*)trampoline<66>,
+	(void*)trampoline<67>,
+	(void*)trampoline<68>,
+	(void*)trampoline<69>,
+	(void*)trampoline<70>,
+	(void*)trampoline<71>,
+	(void*)trampoline<72>,
+	(void*)trampoline<73>,
+	(void*)trampoline<74>,
+	(void*)trampoline<75>,
+	(void*)trampoline<76>,
+	(void*)trampoline<77>,
+	(void*)trampoline<78>,
+	(void*)trampoline<79>,
+	(void*)trampoline<80>,
+	(void*)trampoline<81>,
+	(void*)trampoline<82>,
+	(void*)trampoline<83>,
+	(void*)trampoline<84>,
+	(void*)trampoline<85>,
+	(void*)trampoline<86>,
+	(void*)trampoline<87>,
+	(void*)trampoline<88>,
+	(void*)trampoline<89>,
+	(void*)trampoline<90>,
+	(void*)trampoline<91>,
+	(void*)trampoline<92>,
+	(void*)trampoline<93>,
+	(void*)trampoline<94>,
+	(void*)trampoline<95>,
+	(void*)trampoline<96>,
+	(void*)trampoline<97>,
+	(void*)trampoline<98>,
+	(void*)trampoline<99>,
+	(void*)trampoline<100>,
+	(void*)trampoline<101>,
+	(void*)trampoline<102>,
+	(void*)trampoline<103>,
+	(void*)trampoline<104>,
+	(void*)trampoline<105>,
+	(void*)trampoline<106>,
+	(void*)trampoline<107>,
+	(void*)trampoline<108>,
+	(void*)trampoline<109>,
+	(void*)trampoline<110>,
+	(void*)trampoline<111>,
+	(void*)trampoline<112>,
+	(void*)trampoline<113>,
+	(void*)trampoline<114>,
+	(void*)trampoline<115>,
+	(void*)trampoline<116>,
+	(void*)trampoline<117>,
+	(void*)trampoline<118>,
+	(void*)trampoline<119>,
+	(void*)trampoline<120>,
+	(void*)trampoline<121>,
+	(void*)trampoline<122>,
+	(void*)trampoline<123>,
+	(void*)trampoline<124>,
+	(void*)trampoline<125>,
+	(void*)trampoline<126>,
+	(void*)trampoline<127>
 	}; 
 
 //copy of real export table
@@ -72,56 +151,74 @@ const void* __attribute__((used)) F_TABLE[128];
 //call counters for each function
 int  __attribute__((used)) CALL_COUNTERS[128];
 
+volatile long long __attribute__((used)) R10;
+volatile long long __attribute__((used)) R11;
+volatile long long __attribute__((used)) JUMP;
 
-
-
+#pragma GCC push_options
+#pragma GCC optimize("O0")
 
 template<int OFFSET>
-void trampoline(){
-    asm ("push %r10");
-	asm ("push %r11");
-	//increment counter
-    
+void __attribute__((used,naked)) trampoline(){
+
+	//asm("mov %rax,-24(%rsp)");
+
+	asm volatile("mov R10@GOTPCREL(%rip), %rax");
+	asm volatile("mov %r10, (%rax)");
+	
+	asm volatile("mov R11@GOTPCREL(%rip), %rax");
+	asm volatile("mov %r11, (%rax)");
+
+
 	//get address of CALL_COUNTERS from Global Offset Table
 	asm volatile("movq CALL_COUNTERS@GOTPCREL(%rip), %r10");
 	//select index we want
-
-	asm ("add %0, %%r10"
+	asm volatile("add %0, %%r10"
         :
         :"i" (OFFSET*4)
         :
-        );
-
+    );
 	//dereference pointer to get value
     asm volatile("mov (%r10), %r11");
 	//increment
     asm volatile("add $0x01 , %r11"); 
     //write back
 	asm volatile("mov %r11,(%r10)");
-
-    //call actual function
     
 	//get address of F_TABLE from Global Offset Table
-	asm volatile("movq F_TABLE@GOTPCREL(%rip), %r10");
+	asm volatile("mov F_TABLE@GOTPCREL(%rip), %r10");
     
 	//select index
-	asm ("add %0, %%r10"
+	asm volatile("add %0, %%r10"
         :
         :"i" (OFFSET*8)
         :
-        );
-
+    );
 	//get address of function
-    asm volatile("mov (%r10), %r8");
+    asm volatile("mov (%r10), %r10");
+    asm volatile("mov JUMP@GOTPCREL(%rip),%rax");
+	asm volatile("mov %r10,(%rax)");
 	
-	asm("pop %r10");
-	asm("pop %r11");
+
+	asm volatile("mov R11@GOTPCREL(%rip), %rax");
+	asm volatile("mov (%rax), %r11");
+	asm volatile("mov R10@GOTPCREL(%rip), %rax");
+	asm volatile("mov (%rax), %r10");
+	
 
 	//jump to function
-   	asm volatile("jmp *%r8");
+	asm volatile("mov JUMP@GOTPCREL(%rip), %rax");
+	//asm("mov (%rax), %rax");
+	//asm("mov %rax, -16(%rsp)");
+
+//	asm("mov -24(%rsp),%rax");
+	
+	asm volatile("jmp *(%rax)");
+	//asm("jmp *%rax");
 }
 
-
+#pragma GCC pop_options
+int ONCE=0;
 
 //handle to the actual libcuda library, used to fetch original functions with dlsym
 extern void* original_libcuda_handle;
@@ -155,9 +252,15 @@ extern "C"
 		sprintf(uuid1,"%p %p",*pExportTableId,*(pExportTableId+8));
 		fprintf(stderr,"UUID:%s\n",uuid1);
 
-		if(strcmp(uuid1,"0x4ae7f45b6cfbd56b 0xf99dfd1239d98789")==0){
+
+
+		if(strcmp(uuid1,"0x4ae7f45b6cfbd56b 0xf99dfd1239d98789")==0 && ONCE==0){
 			fprintf(stderr,"Swapping tables for %s\n",uuid1);
 			memcpy(F_TABLE,*ppExportTable,128*sizeof(void*));
+			ONCE=1;
+		}
+
+		if(strcmp(uuid1,"0x4ae7f45b6cfbd56b 0xf99dfd1239d98789")==0){
 			dump_export_table(ppExportTable,35);
 			*ppExportTable = FAKE_EXPORT_TABLE;
 			fprintf(stderr,"===================================\n");
