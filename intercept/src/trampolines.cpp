@@ -10,15 +10,20 @@ volatile long long __attribute__((used)) JUMP;
 template<int OFFSET>
 void __attribute__((used,naked)) trampoline(){
 	//store previous rax value just outside the stack
-	asm("mov %rax,-24(%rsp)");
+	//asm("mov %rax,-24(%rsp)");
+	asm("push %rax");
+
 
 	//store previous r10 at R10 global variable
-	asm volatile("mov R10@GOTPCREL(%rip), %rax");
-	asm volatile("mov %r10, (%rax)");
+	//asm volatile("mov R10@GOTPCREL(%rip), %rax");
+	//asm volatile("mov %r10, (%rax)");
+	asm("push %r10");
+
 
 	//store previous r11 at R11 global variable	
-	asm volatile("mov R11@GOTPCREL(%rip), %rax");
-	asm volatile("mov %r11, (%rax)");
+	//asm volatile("mov R11@GOTPCREL(%rip), %rax");
+	//asm volatile("mov %r11, (%rax)");
+	asm("push %r11");
 
 
 	//get address of CALL_COUNTERS from Global Offset Table
@@ -45,24 +50,34 @@ void __attribute__((used,naked)) trampoline(){
         :"i" (OFFSET*8)
         :
     );
-	//get address of function, store to JUMP global variable
-    asm volatile("mov (%r10), %r10");
-    asm volatile("mov JUMP@GOTPCREL(%rip),%rax");
-	asm volatile("mov %r10,(%rax)");
+	//get address of function
+	asm volatile("mov (%r10), %r10");
+    
+	// asm volatile("mov JUMP@GOTPCREL(%rip),%rax");
+	//store func pointer somewhere outside stack
+	asm volatile("mov %r10,8(%rsp)");
 	
-	//restore r11 and r10 to previous values
-	asm volatile("mov R11@GOTPCREL(%rip), %rax");
-	asm volatile("mov (%rax), %r11");
-	asm volatile("mov R10@GOTPCREL(%rip), %rax");
-	asm volatile("mov (%rax), %r10");
 	
-	//load JUMP target to stack
-	asm volatile("mov JUMP@GOTPCREL(%rip), %rax");
-	asm("mov (%rax), %rax");
-	asm("mov %rax, -16(%rsp)");
+	asm("pop %rax");
+	asm("pop %r10");
+	asm("pop %r11");
 
-	//restore rax
-	asm("mov -24(%rsp),%rax");
+
+
+
+	// //restore r11 and r10 to previous values
+	// asm volatile("mov R11@GOTPCREL(%rip), %rax");
+	// asm volatile("mov (%rax), %r11");
+	// asm volatile("mov R10@GOTPCREL(%rip), %rax");
+	// asm volatile("mov (%rax), %r10");
+	
+	// //load JUMP target to stack
+	// asm volatile("mov JUMP@GOTPCREL(%rip), %rax");
+	// asm("mov (%rax), %rax");
+	// asm("mov %rax, -16(%rsp)");
+
+	// //restore rax
+	// asm("mov -24(%rsp),%rax");
 	
 	//jump to target function
 	asm volatile("jmp *-16(%rsp)");
