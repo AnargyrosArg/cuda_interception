@@ -43,6 +43,8 @@ extern "C"{
 
 
     void *dlvsym(void *handle,const char *symbol,const char *version){
+        fprintf(stderr,"dlvsym called for symbol %s and handle %p and version %s\n",symbol,handle,version);
+
         void* (*original_dlvsym)(void *,const char *,const char *);
         original_dlvsym = (void *(*)(void *,const char *,const char *)) original_dlsym(__libc_dlopen_mode("libdl.so.2",RTLD_LAZY), "dlvsym");
         return original_dlvsym(handle,symbol,version);

@@ -4,6 +4,11 @@
 CUresult (*original_cuModuleUnload)(
 CUmodule
 );
+
+
+#define F_TABLE_SIZE 5120
+
+
 //handle to the actual libcuda library, used to fetch original functions with dlsym
 extern void* original_libcuda_handle;
 extern int CALL_COUNTERS[];
@@ -34,10 +39,14 @@ extern "C"
 		CUresult retval = original_cuModuleUnload(
 		hmod
 		);
-		fprintf(stderr, "===============\n");
-		for(int i=0;i<6;i++){
-			fprintf(stderr,"func:%d:%d\n",i,CALL_COUNTERS[i]);
+
+		fprintf(stderr,"Counters:\n");
+		for(int i=0;i<F_TABLE_SIZE;i++){
+			if( CALL_COUNTERS[i] !=0 ){
+				fprintf(stderr,"trampoline<%d>:called %d times\n",i,CALL_COUNTERS[i]);
+			}
 		}
+
 		return retval;
 	}
 }
