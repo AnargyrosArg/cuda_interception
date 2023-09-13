@@ -11,6 +11,10 @@ void* original_libcuda_handle = NULL;
 //handle for nvrtc lib
 void* original_libnvrtc_handle = NULL;
 
+
+void* static_libcudnn_handle = NULL;
+
+
 void* libintercept_handle = NULL;
 
 
@@ -42,7 +46,6 @@ extern "C"{
             error = dlerror();
             if(error){
                 fprintf(stderr,"Cannot find intercept library: %s\n",error);
-               // fprintf(stderr,"LD_LIBRARY_PATH= %s\n",getenv("LD_LIBRARY_PATH"));
                 exit(-1);
             }
         }
@@ -53,31 +56,28 @@ extern "C"{
             //this handle is not returned to the calling function
             if(original_libcuda_handle == NULL){
                 original_libcuda_handle = original_dlopen("libcuda.so.1", RTLD_LAZY | RTLD_LOCAL);
-                fprintf(stderr,"Interceptor just dlopened libcuda for the first time\n");
-                // fprintf(stderr,"LOCAL | LAZY -> %d\n",RTLD_LAZY | RTLD_LOCAL);
-                // fprintf(stderr,"GLOBAL | LAZY -> %d\n",RTLD_LAZY | RTLD_GLOBAL);
-                // fprintf(stderr,"LOCAL | NOW -> %d\n",RTLD_NOW | RTLD_LOCAL);
-                // fprintf(stderr,"GLOBAL | NOW -> %d\n",RTLD_NOW | RTLD_GLOBAL);
                 fprintf(stderr,"original libcuda handle:%p\n",original_libcuda_handle);
             }
             //return our own lib instead
+            return original_dlopen(filename,flag);
             retval = libintercept_handle;
             error = dlerror();
             if(error){
                 fprintf(stderr,"%s\n",error);
                 exit(-1);
             }
-
-        }else if(filename && (strcmp(filename,"libnvrtc.so.11.2")==0)){
-            //load libnvrtc for the first time
-            if(original_libnvrtc_handle == NULL){
-                original_libnvrtc_handle = original_dlopen(filename, flag);
-                error = dlerror();
-                if(error) fprintf(stderr,"dlopen libnvrtc.so.11.2: %s\n",error);
-            }
-            //return our own lib instead
-            retval = libintercept_handle;
             
+        //}else if(filename && ((strcmp(filename,"libcudnn_cnn_train.so.8")==0) || (strcmp(filename,"libcudnn_ops_infer.so.8")==0) || (strcmp(filename,"libcudnn_cnn_infer.so.8")==0) )){
+        //     if(static_libcudnn_handle == NULL){
+        //         static_libcudnn_handle= original_dlopen("libcudnn_static.so", RTLD_LAZY | RTLD_LOCAL);
+        //     }
+        //     retval = static_libcudnn_handle;
+        //     error = dlerror();
+        //     if(error){
+        //         fprintf(stderr,"%s\n",error);
+        //         exit(-1);
+        //     }
+        //     fprintf(stderr,"CAUGHT!\n");
         }else{
             retval =  original_dlopen(filename,flag);
         }
@@ -86,7 +86,7 @@ extern "C"{
         //to check if some library can be found,and resume normal execution 
         error = dlerror();
         if(error) fprintf(stderr,"Error occured dlopen: %s\n retval:%p\n",error,retval);
-    
+        
         fprintf(stderr,"handle returned for %s -> %p\n",filename,retval);
         return retval;
     }

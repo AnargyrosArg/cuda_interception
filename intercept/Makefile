@@ -9,7 +9,21 @@ CWD = $(shell pwd)
 
 .PHONY: src
 
-interceptlib.so: $(OBJ_FILES) $(BUILD_DIR)  #-Wl,-soname,libcuda.so.515.43.04
+all: libintercept.so libcublas_static.so libcublasLt_static.so libcudnn_static.so
+
+
+libcublas_static.so: 
+	g++ $(CUDA_HOME)/lib64/libcublas_static.a -o libcublas_static.so -fPIC -shared -D_GNU_SOURCE -rdynamic -Wl,-rpath,'$(CWD)' 
+
+
+libcublasLt_static.so: 
+	g++ $(CUDA_HOME)/lib64/libcublasLt_static.a -o libcublasLt_static.so -fPIC -shared -D_GNU_SOURCE -rdynamic -Wl,-rpath,'$(CWD)'
+
+libcudnn_static.so:
+	g++ -o libcudnn_static.so -fPIC -shared -D_GNU_SOURCE -L$(CUDA_HOME)/lib64/libcudnn_ops_infer_static.a -L$(CUDA_HOME)/lib64/libcudnn_cnn_infer_static.a -L$(CUDA_HOME)/lib64/libcudnn_cnn_train_static.a  -Wl,-rpath,'$(CWD)'
+
+
+libintercept.so: $(OBJ_FILES) $(BUILD_DIR)
 	g++ $(OBJ_FILES) -o libintercept.so -fPIC -shared -D_GNU_SOURCE -Wl,-rpath,'$(CWD)' -Wl,-rpath,'/home1/public/argyrosan/.local/lib/python3.9/site-packages/torch/lib/'
 
 #Compiles each source file into its object file individually 

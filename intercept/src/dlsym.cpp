@@ -34,7 +34,6 @@ extern "C"{
             original_dlsym = (void* (*)(void*, const char*)) __libc_dlsym(__libc_dlopen_mode("libdl.so.2",RTLD_LAZY), "dlsym");
         }
         if(strcmp("dladdr1",symbol)==0){
-
             return (void*)dladdr1;
         }
         return (original_dlsym(handle, symbol));

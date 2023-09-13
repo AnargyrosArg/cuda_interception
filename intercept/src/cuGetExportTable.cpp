@@ -63,15 +63,10 @@ extern "C"
 		fprintf(stderr,"UUID:%s\n",uuid);
 		
 		export_table_addresses[uuid] = (long)*ppExportTable;
-		
-		if(strcmp(uuid,"0x4b70e6bd552008d4 0xf2e1663c12ba348d")==0)
-			dump_export_table(ppExportTable,10);
-
-
+	
 		// TABLE 1 0x4b70e6bd552008d4 0xf2e1663c12ba348d SIZE = 4
 		static int ONCE=1;
 		if(ONCE==0 && strcmp(uuid,"0x4b70e6bd552008d4 0xf2e1663c12ba348d")==0){
-			dump_export_table(ppExportTable,10);
 			int size=4;
 			long long base = 0x6c80;
 			long long end = 0x90c0;
@@ -160,12 +155,17 @@ extern "C"
 		//TABLE 6 0x48321497608c3121 0xf2c82473ff41a68c SIZE = 72
 		static int ONCE6=0;
 		if(ONCE6==0 && strcmp(uuid,"0x48321497608c3121 0xf2c82473ff41a68c")==0){
-			fprintf(stderr,"Swapping tables 0x48321497608c3121 0xf2c82473ff41a68c\n");
 			int size = 55;
 			long long base = 0x6c80;
 			long long end = 0x90c0;
 			int margin = 1024*sizeof(void*); 
 			long offset = 0x90c0 - base; 
+
+			memcpy(F_TABLE,(*ppExportTable)-offset,F_TABLE_SIZE*sizeof(void*));
+
+			//copy non-pointer values to FAKE_EXPORT_TABLE
+			patch_fake_table((*ppExportTable)-offset,F_TABLE_SIZE);
+
 			//make export table writable
 			export_table_mprotect((*ppExportTable),F_TABLE_SIZE*sizeof(void*),PROT_READ | PROT_WRITE);
 				

@@ -305,7 +305,7 @@ endif
 
 ALL_CCFLAGS += --threads 0 --std=c++11
 
-LIBRARIES += -lcublas -lcublasLt -lcusparse -lculibos
+LIBRARIES += -lcudart -lcublas_static -lcublasLt_static -lcusparse_static -lculibos
 
 ################################################################################
 
